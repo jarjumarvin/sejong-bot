@@ -1,0 +1,15 @@
+{
+    "prefix": "~",
+    "accentColor": "#C27C0E",
+    "status": ["WATCHING", "over hangooliez"],
+    "enabled_commands": {
+        "help": true,
+        "word": true,
+        "examples": true,
+        "papago": true,
+        "invite": true,
+        "avatar": false,
+        "ping": false
+    },
+    "debug_mode": true
+}

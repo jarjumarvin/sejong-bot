@@ -1,0 +1,26 @@
+{
+  "name": "sejong-bot",
+  "version": "0.0.1",
+  "description": "Discord Bot for KR-KR and EN-KR translation / lookups",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jarjumarvin/discord-bot.git"
+  },
+  "author": "Marvin Jarju",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jarjumarvin/discord-bot/issues"
+  },
+  "homepage": "https://github.com/jarjumarvin/discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "elementtree": "^0.1.7",
+    "pm2": "^3.2.4",
+    "promise": "^8.0.2",
+    "request": "^2.88.0",
+  }
+}
