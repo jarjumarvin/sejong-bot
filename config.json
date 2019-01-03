@@ -7,6 +7,7 @@
         "word": true,
         "examples": true,
         "papago": true,
+        "delete": true,
         "invite": true,
         "avatar": false,
         "ping": false

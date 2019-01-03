@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+
 const { prefix, enabled_commands, status } = require('./config.json');
 const { discord_token } = require('./apiconfig.json');
 
@@ -30,6 +31,35 @@ client.once('ready', () => {
         console.log(`${com[0]}` + (cmd.aliases ? ' (' + cmd.aliases.join(', ') + ')' : ''));
     };
     console.log(`(--------------------LOADING COMPLETE----------------)`);
+});
+
+client.on('messageReactionAdd', (reaction, user) => {
+	if(reaction.message.author.id === client.user.id && reaction.emoji.name === '❌' && reaction.message.channel.type !== 'text') {
+		if(reaction.message.reactions.find(reaction => reaction.me) && user.id !== client.user.id) {
+			reaction.message.delete();
+		}
+	}
+});
+
+const events = {
+	MESSAGE_REACTION_ADD: 'messageReactionAdd',
+};
+
+client.on('raw', async event => {
+	if(!events.hasOwnProperty(event.t)) return;
+	const {d: data} = event;
+	const user = client.users.get(data.user_id);
+	const channel = client.channels.get(data.channel_id) || await user.createDM();
+
+	if(channel.messages.has(data.message_id)) return;
+	const message = await channel.fetchMessage(data.message_id);
+	const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+	let reaction = message.reactions.get(emojiKey);
+	if(!reaction) {
+		const emoji = new Discord.Emoji(client.guilds.get(data.guild_id), data.emoji);
+		reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
+	}
+	client.emit(events[event.t], reaction, user);
 });
 
 client.on('message', message => {
@@ -73,7 +103,8 @@ client.on('message', message => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-        console.log(`${message.guild.name} - ${message.author.username}: ${command.name}${(args.length && args.join(' ').length < 20) ? ' - ' + args.join(' ') : ''}`);
+		if(message.channel.type !== 'text') console.log(`DM - ${message.author.username}: ${command.name}${(args.length && args.join(' ').length < 30) ? ' - ' + args.join(' ') : ''}`);
+		else console.log(`${message.guild.name} - ${message.author.username}: ${command.name}${(args.length && args.join(' ').length < 30) ? ' - ' + args.join(' ') : ''}`);
 		command.execute(message, args);
 	}
 	catch (error) {
