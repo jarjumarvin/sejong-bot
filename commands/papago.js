@@ -11,6 +11,7 @@ module.exports = {
 		The available language codes are: ko (Korean), en (English), zh-CN (Chinese), zh-TW (Taiwanese), es (Spanish), fr (French), vi (Vietnamese), th (Thai), id (Indonesian).
 		\r\nThe available combinations are:\r\nko<->en\r\nko<->zh-CN\r\nko<->zh-TW\r\nko<->es\r\nko<->fr\r\nko<->vi\r\nko<->th\r\nko<->id\r\nen<->ja\r\nen<->fr`,
 	aliases: ['p', 'ppg'],
+	args: true,
 	usage: `${prefix}papago ko-en 안녕하세요`,
     cooldown: 5,
 	execute(message, args) {
