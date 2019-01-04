@@ -4,7 +4,6 @@
   "description": "Discord Bot for KR-KR and EN-KR translation / lookups",
   "main": "index.js",
   "scripts": {
-    "test": "test"
   },
   "repository": {
     "type": "git",
