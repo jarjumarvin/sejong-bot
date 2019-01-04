@@ -78,14 +78,14 @@ module.exports = {
             if(dic_entries.length == 0) {
                 pendingMessage.edit(enEmbed);
             } else {
-                const reactionFilter = (reaction, user) => ['🇰🇷', '🇬🇧', '🔖'].includes(reaction.emoji.name) && user.id === message.author.id;
+                const reactionFilter = (reaction, user) => ['🇰🇷', '🇬🇧', '📖'].includes(reaction.emoji.name) && user.id === message.author.id;
 				var en = true;
 				var sent = false;
                 pendingMessage.edit(enEmbed)
                     .then(msg => msg.react('🇬🇧'))
                     .then(reaction => reaction.message.react('🇰🇷'))
                     .then(reaction => {
-						if(!isDM) reaction.message.react('🔖');
+						if(!isDM) reaction.message.react('📖');
                         const collector = reaction.message.createReactionCollector(reactionFilter, { time: 60000 });
                         collector.on('collect', r => {
                             if(r.emoji.name === '🇬🇧') {
@@ -94,7 +94,7 @@ module.exports = {
                             } else if(r.emoji.name === '🇰🇷') {
 								en = false;
                                 r.message.edit(krEmbed);
-                            } else if(r.emoji.name === '🔖') {
+                            } else if(r.emoji.name === '📖') {
 								if(!isDM) {
 									if(!sent) {
 										enEmbed.setFooter('Use the reaction to remove this message.', 'https://i.imgur.com/v95B0db.jpg');

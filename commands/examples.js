@@ -35,14 +35,14 @@ module.exports = {
 					exEmbed.setFooter(`${message.author.username}, you can bookmark the result using a reaction.`, 'https://i.imgur.com/v95B0db.jpg');
 				}
 
-				const reactionFilter = (reaction, user) => ['🔖'].includes(reaction.emoji.name) && user.id === message.author.id;
+				const reactionFilter = (reaction, user) => ['📖'].includes(reaction.emoji.name);
 				var sent = false;
 				pendingMessage.edit(exEmbed)
 					.then(msg => {
-						if(!isDM) msg.react('🔖');
+						if(!isDM) msg.react('📖');
 						const collector = msg.createReactionCollector(reactionFilter, { time: 60000 });
                         collector.on('collect', r => {
-                            if(r.emoji.name === '🔖') {
+                            if(r.emoji.name === '📖') {
 								if(!isDM) {
 									if(!sent) {
 										exEmbed.setFooter('Use the reaction to remove this message.', 'https://i.imgur.com/v95B0db.jpg');
