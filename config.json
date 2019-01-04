@@ -8,6 +8,7 @@
         "examples": true,
         "papago": true,
         "delete": true,
+        "shiritori": false,
         "invite": true,
         "avatar": false,
         "ping": false

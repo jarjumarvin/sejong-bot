@@ -10,8 +10,9 @@ module.exports = {
         '감탄사' : 'exclamation',
         '접사' : 'affix',
         '의존' : 'dependent',
+        '의존 명사' : 'dependent noun',
         '보조 동사' : 'helper verb',
         '보조 형용사' : 'helper adjective',
         '어미' : 'ending',
-        '품사 없음' : 'N/A'
+        '품사 없음' : 'N/A',
 }
