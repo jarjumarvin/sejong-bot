@@ -3,14 +3,5 @@
     "accentColor": "#C27C0E",
     "avatar": "https://i.imgur.com/v95B0db.jpg",
     "status": ["WATCHING", "over hangooliez"],
-    "enabledCommands": {
-      "word": true,
-      "examples": true,
-      "papago": true,
-      "invite": true,
-      "help": true,
-      "avatar": false,
-      "ping": false
-    },
-    "debug_mode": true
+    "enabledCommands": ["word", "examples", "papago", "help"]
 }
