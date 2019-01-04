@@ -1,27 +1,33 @@
 const request = require('request');
-const querystring = require('querystring');
 const Promise = require('promise');
-const { papago_url, papago_client_id, papago_client_secret } = require('../apiconfig.json');
+const { papagoUrl, papagoClientId, papagoClientSecret } = require('../apiconfig.json');
 
 module.exports = class Papago {
-    translate(text, source, target) {
-        const options = {
-            url: papago_url,
-            form: {
-                'source': source,
-                'target': target,
-                'text': text,
-            },
-            headers: {
-                'X-Naver-Client-Id':papago_client_id,
-                'X-Naver-Client-Secret': papago_client_secret
-            },
-        };
-        return new Promise( (resolve, reject) => {
-            request.post(options, function(error, response, body) {
-                if(!error && response.statusCode == 200) resolve(body);
-                else reject(error);
-            });
-        });
-    }
-}
+  translate(text, source, target) {
+    this.options = {
+      url: papagoUrl,
+      form: {
+        source,
+        target,
+        text,
+      },
+      headers: {
+        'X-Naver-Client-Id': papagoClientId,
+        'X-Naver-Client-Secret': papagoClientSecret,
+      },
+    };
+
+    return new Promise((resolve, reject) => {
+      request.post(this.options, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+          const { result } = JSON.parse(body).message;
+          resolve({
+            text: result.translatedText,
+            source: result.srcLangType,
+            target: result.tarLangType,
+          });
+        } else reject(error);
+      });
+    });
+  }
+};

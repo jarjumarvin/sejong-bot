@@ -4,12 +4,12 @@
   "description": "Discord Bot for KR-KR and EN-KR translation / lookups",
   "main": "index.js",
   "engined": {
-      "node": "11.6.0",
-      "npm": "6.5.0-next.0"
+    "node": "11.6.0",
+    "npm": "6.5.0-next.0"
   },
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,15 @@
     "elementtree": "^0.1.7",
     "pm2": "^3.2.4",
     "promise": "^8.0.2",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "roman-numeral": "^0.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.2"
   }
 }
