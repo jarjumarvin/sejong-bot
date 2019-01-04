@@ -1,5 +1,9 @@
 const Discord = require('discord.js');
-const { prefix, enabledCommands, accentColor } = require('../config.json');
+const {
+  prefix,
+  enabledCommands,
+  accentColor,
+} = require('../config.json');
 
 module.exports = {
   name: 'help',
@@ -10,6 +14,7 @@ module.exports = {
   cooldown: 3,
   execute(message, args) {
     const { commands } = message.client;
+    // commands = commands.sort((e, w) => commandOrder[e.name] - commandOrder[w.name]);
 
     if (!args.length) {
       const bigEmbed = new Discord.RichEmbed()
@@ -18,18 +23,16 @@ module.exports = {
         .setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
 
       commands.forEach((c) => {
-        if (enabledCommands[c.name]) {
-          const {
-            name,
-            aliases,
-            description,
-            usage,
-          } = c;
+        const {
+          name,
+          aliases,
+          description,
+          usage,
+        } = c;
 
-          const descriptionAndUsage = description + (usage ? `\r\n __(Ex. ${usage})__` : '');
-          const title = `${prefix}${name} ${aliases ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
-          bigEmbed.addField(title, descriptionAndUsage);
-        }
+        const descriptionAndUsage = description + (usage ? `\r\n __(Ex. ${usage})__` : '');
+        const title = `${prefix}${name} ${aliases ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
+        bigEmbed.addField(title, descriptionAndUsage);
       });
 
       message.channel.send(bigEmbed);

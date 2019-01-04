@@ -1,4 +1,3 @@
-const fs = require('fs');
 const Discord = require('discord.js');
 
 const { prefix, enabledCommands, status } = require('./config.json');
@@ -7,13 +6,9 @@ const { discordToken } = require('./apiconfig.json');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-commandFiles.forEach((file) => {
-  const command = require(`./commands/${file}`);
-  if (enabledCommands[command.name]) {
-    client.commands.set(command.name, command);
-  }
+enabledCommands.forEach((name) => {
+  const command = require(`./commands/${name}.js`);
+  client.commands.set(command.name, command);
 });
 
 const cooldowns = new Discord.Collection();
@@ -24,7 +19,7 @@ client.once('ready', () => {
   console.log(`Username: ${client.user.username}`);
   console.log(`Status: (${status[0].toLowerCase()} ${status[1]})`);
   console.log('(----------------------COMMANDS----------------------)');
-  console.log('(----------------------------------------------------)');
+  console.log(client.commands.map(e => e.name));
   console.log('(--------------------LOADING COMPLETE----------------)');
 });
 
