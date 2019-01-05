@@ -33,7 +33,7 @@ module.exports = {
         .then((krReact) => {
           if (!isDM) krReact.message.react('📖');
           const collector = krReact.message
-            .createReactionCollector(reactionFilter, { time: 60000 });
+            .createReactionCollector(reactionFilter, { time: 120000 });
 
           collector.on('collect', (r) => {
             if (r.emoji.name === '🇬🇧') {
@@ -49,10 +49,10 @@ module.exports = {
 
           collector.on('end', () => {
             if (en) {
-              DiscordUtil.setEmbedFooter(enEmbed, `You can no longer use emojis to toggle the language ${isDM ? 'or bookmark the result' : ''}.`);
+              DiscordUtil.setEmbedFooter(enEmbed, 'You can no longer use emojis to toggle the language. Anyone can still bookmark.');
               answerMessage.edit(enEmbed);
             } else {
-              DiscordUtil.setEmbedFooter(krEmbed, `You can no longer use emojis to toggle the language ${isDM ? 'or bookmark the result' : ''}.`);
+              DiscordUtil.setEmbedFooter(enEmbed, 'You can no longer use emojis to toggle the language. Anyone can still bookmark.');
               answerMessage.edit(krEmbed);
             }
           });

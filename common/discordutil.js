@@ -17,7 +17,7 @@ module.exports = {
     if (searchResults.length === 0) {
       embed.addField('Error', 'No results have been found');
     } else {
-      this.setEmbedFooter(embed, `${username}, you can toggle languages ${!isDM ? 'or bookmark the result' : ''} using reactions.`);
+      this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark the result.' : ''}`);
       let big = 0;
       searchResults.forEach((entry) => {
         if (embed.fields.length < 6 && big < 2) {
@@ -59,7 +59,7 @@ module.exports = {
       }
       embed.setDescription(s);
       if (!isDM) {
-        this.setEmbedFooter(embed, `${username}, you can bookmark the result using a reaction.`, 'https://i.imgur.com/v95B0db.jpg');
+        this.setEmbedFooter(embed, 'Anyone can bookmark this result using the book reaction.');
       }
     }
     return embed;
@@ -68,7 +68,6 @@ module.exports = {
     const embed = this.createBasicEmbed();
     this.setEmbedFooter(embed, 'Powered by Papago');
     if (!result) {
-      console.log('Error', result);
       embed.addField('Error', 'No results have been found');
     } else {
       embed.addField('Result', result.text);
