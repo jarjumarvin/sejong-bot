@@ -1,20 +1,17 @@
 const Discord = require('discord.js');
-const { accentColor, avatar } = require('../config.json');
+const { prefix, accentColor, avatar } = require('../config.json');
 const types = require('./pos.js');
 const langs = require('./langs.js');
 
 module.exports = {
-
   createBasicEmbed() {
     return new Discord.RichEmbed()
       .setColor(accentColor)
       .setAuthor('Sejong', 'https://i.imgur.com/v95B0db.jpg');
   },
-
   createPendingEmbed(username) {
     return this.createBasicEmbed().setDescription(`I am going over the books for you ${username}, please wait. :eyes:`);
   },
-
   createSearchResultEmbed(language, query, username, isDM, searchResults) {
     const embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
     if (searchResults.length === 0) {
@@ -50,7 +47,6 @@ module.exports = {
     }
     return embed;
   },
-
   createExampleResultEmbed(language, query, username, isDM, searchResults) {
     const embed = this.createBasicEmbed().setDescription(`Example Sentences for for: **${query}**`);
     if (searchResults.length === 0) {
@@ -68,7 +64,6 @@ module.exports = {
     }
     return embed;
   },
-
   createTranslationResultEmbed(result) {
     const embed = this.createBasicEmbed();
     this.setEmbedFooter(embed, 'Powered by Papago');
@@ -82,9 +77,32 @@ module.exports = {
     }
     return embed;
   },
-
   setEmbedFooter(embed, footer) {
     embed.setFooter(footer, avatar);
   },
+  createHelpEmbed(commands) {
+    const embed = this.createBasicEmbed().setDescription(`Use **${prefix}help <command>** or **${prefix}h <command>** to see information about a specific command.`);
+    commands.forEach((c) => {
+      if (c.name === 'help') return;
+      const {
+        name,
+        aliases,
+        description,
+        usage,
+      } = c;
 
+      const descriptionAndUsage = description + (usage ? `\r\n __(Ex. ${usage})__` : '');
+      const title = `${prefix}${name} ${aliases ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
+      embed.addField(title, descriptionAndUsage);
+    });
+    return embed;
+  },
+  createDetailHelpEmbed(command) {
+    const embed = this.createBasicEmbed().setDescription(`**${prefix}${command.name} ${command.aliases ? `(short: ${command.aliases.map(e => prefix + e).join(', ')})` : ''}**\r\n${command.longdescription ? command.longdescription : command.description}`);
+    if (command.usage) {
+      embed.addField('Usage Example', command.usage ? command.usage : 'None', true);
+    }
+    embed.addField('Cooldown', command.cooldown ? `${command.cooldown} seconds` : 'None', true);
+    return embed;
+  },
 };

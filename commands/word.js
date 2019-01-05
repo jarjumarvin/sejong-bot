@@ -4,8 +4,8 @@ const { prefix } = require('../config.json');
 
 module.exports = {
   name: 'word',
-  description: 'Lookup a word',
-  longdescription: 'Get definitions etc',
+  description: 'Search the dictionary for a Korean word.',
+  longdescription: 'Searches the dictionary for the Korean word provided and lists found results along with respective meanings. Results come from the National Institute of Korean Language\'s Korean-English Learners\' Dictionary.\r\n\r\nEnglish definitions are displayed by default.\r\n\r\nUse the Korean / English flag reactions to swap the language of the meanings, or use the book reaction to bookmark the message to DMs.',
   aliases: ['w'],
   usage: `${prefix}word 나무`,
   args: true,
@@ -43,10 +43,6 @@ module.exports = {
               en = false;
               r.message.edit(krEmbed);
             } else if (r.emoji.name === '📖' && !isDM && !sent) {
-              DiscordUtil.setEmbedFooter(enEmbed, 'Use the reaction to remove this message.');
-              DiscordUtil.setEmbedFooter(krEmbed, 'Use the reaction to remove this message.');
-              message.author.send(en ? enEmbed : krEmbed)
-                .then(dm => dm.react('❌'));
               sent = true;
             }
           });
