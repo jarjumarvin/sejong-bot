@@ -26,8 +26,14 @@ client.once('ready', () => {
 client.on('messageReactionAdd', (reaction, user) => {
   if (reaction.message.author.id === client.user.id && reaction.emoji.name === '❌' && reaction.message.channel.type !== 'text') {
     if (reaction.message.reactions.find(rawReaction => rawReaction.me)
-      && user.id !== client.user.id) {
+    && user.id !== client.user.id) {
       reaction.message.delete();
+    }
+  }
+  if (reaction.message.author.id === client.user.id && reaction.emoji.name === '📖' && reaction.message.channel.type === 'text') {
+    if (reaction.message.reactions.find(rawReaction => rawReaction.me)
+    && user.id !== client.user.id) {
+      user.send(reaction.message.content).then(dm => dm.react('❌'));
     }
   }
 });

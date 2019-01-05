@@ -4,8 +4,8 @@ const { prefix } = require('../config.json');
 
 module.exports = {
   name: 'examples',
-  description: 'Example Sentences',
-  longdescription: 'Get example sentences etc',
+  description: 'Search the dictionary for example sentences.',
+  longdescription: 'Searches the dictionary for example sentences including the Korean word provided.\r\n\r\nResults come from the National Institute of Korean Language\'s Korean-English Learners\' Dictionary.\r\n\r\nUse the book reaction to bookmark the message to DMs.',
   aliases: ['e', 'ex'],
   usage: `${prefix}examples 나무`,
   args: true,
@@ -34,9 +34,6 @@ module.exports = {
             if (r.emoji.name === '📖') {
               if (!isDM) {
                 if (!sent) {
-                  DiscordUtil.setEmbedFooter(exEmbed, 'Use the reaction to remove this message.');
-                  message.author.send(exEmbed)
-                    .then(dm => dm.react('❌'));
                   sent = true;
                 }
               }
