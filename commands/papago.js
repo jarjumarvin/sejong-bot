@@ -5,7 +5,7 @@ const { prefix } = require('../config.json');
 
 module.exports = {
   name: 'papago',
-  description: `Translate a text using Papago. (default: en-kr) \r\nSee ${prefix}help papago for other options.`,
+  description: `Translate a text using Papago. (default: ko>en) \r\nSee ${prefix}help papago for other options.`,
   longdescription: `Translate a sentence using Papago. Use ${prefix}papago to translate from Korean to English (default).
   \r\nUse ${prefix}papago [source]>[target] [text] to specify both the target and source language.\r\n
   The available language codes are: ko (Korean), en (English), zh-CN (Chinese), zh-TW (Taiwanese), es (Spanish), fr (French), vi (Vietnamese), th (Thai), id (Indonesian).
