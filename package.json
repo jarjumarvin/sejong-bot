@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "description": "Discord Bot for KR-KR and EN-KR translation / lookups",
   "main": "index.js",
-  "engined": {
+  "engines": {
     "node": "11.6.0",
     "npm": "6.5.0-next.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start index.js"
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "repository": {
     "type": "git",
