@@ -4,10 +4,10 @@ const types = require('./pos.js');
 const langs = require('./langs.js');
 
 module.exports = {
-  createBasicEmbed() {
+  createBasicEmbed(name) {
     return new Discord.RichEmbed()
       .setColor(accentColor)
-      .setAuthor('Sejong', 'https://i.imgur.com/v95B0db.jpg');
+      .setAuthor(name || 'Sejong', 'https://i.imgur.com/v95B0db.jpg');
   },
   createPendingEmbed(username) {
     return this.createBasicEmbed().setDescription(`I am going over the books for you ${username}, please wait. :eyes:`);
@@ -80,7 +80,7 @@ module.exports = {
     embed.setFooter(footer, avatar);
   },
   createHelpEmbed(commands) {
-    const embed = this.createBasicEmbed().setDescription(`Use **${prefix}help <command>** or **${prefix}h <command>** to see information about a specific command.`);
+    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** or **${prefix}h <command>** to see information about a specific command.`);
     commands.forEach((c) => {
       if (c.name === 'help') return;
       const {
