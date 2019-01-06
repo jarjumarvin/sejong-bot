@@ -1,6 +1,6 @@
 {
   "name": "sejong-bot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Discord Bot for KR-KR and EN-KR translation / lookups",
   "main": "index.js",
   "engines": {
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2-runtime start ecosystem.config.js --env production"
+    "start": "pm2 start index.js"
   },
   "repository": {
     "type": "git",
