@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start index.js"
+    "start": "node index.js;"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
     "detect-libc": "^1.0.3",
     "discord.js": "^11.4.2",
     "elementtree": "^0.1.7",
-    "pm2": "^3.2.4",
     "promise": "^8.0.2",
     "request": "^2.88.0",
     "roman-numeral": "^0.2.6"
