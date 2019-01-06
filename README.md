@@ -1,5 +1,4 @@
 # Sejong-bot
----
 A Discord bot for learners of the Korean language.
 
 <div style="text-align:center"><img src ="https://i.ibb.co/SP91Rkx/image.png" /></div>
