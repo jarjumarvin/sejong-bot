@@ -1,5 +1,5 @@
-# Sejong-bot
-A Discord bot for learners of the Korean language.
+# Who is Sejong-bot?
+Sejong-bot is a Korean language bot targeted towards Korean learners and enthusiats. It supports features such as word definitions in Korean and English, example sentences and neural machine translation. Users can also bookmark past searches to their DM's.
 
 <div style="text-align:center"><img src ="https://i.ibb.co/SP91Rkx/image.png" /></div>
 
@@ -10,9 +10,22 @@ A Discord bot for learners of the Korean language.
 - [Papago NMT](https://developers.naver.com/docs/nmt/reference/)
     - Neural machine translation service supporting multiple languages
 
+## Commands
+
+### ~word (~w)
+This command performs a dictionary search for a given parameter presents the results to the user in a precise manner. Results include the word-type, as well as the meanings of the word both in English and in Korean. Users can use reactions to switch the language of the meanings or bookmark the result.
+
+### ~examples (~e)
+Returns a list of Korean example sentences including a word given. Users can bookmark the result.
+
+### ~papago (~p, ~ppg)
+Uses Papago's Neural Machine Translation to translate a given text between two given languages. Translates from Korean to English by default but users can specify source and target language using `~papago en>ko`. Available language codes can be seen using `~help papago`.
+
 ## Installation
+
 ### Dependencies
 * Node.js
+
 ### Running:
 - Generate a [Discord token](https://discordapp.com/developers/applications/), a [한국어기초사전 OPEN API](https://krdict.korean.go.kr/openApi/openApiInfo) token, and a [Papago NMT API](https://developers.naver.com/docs/nmt/reference/) client ID and secret.
 - Create file `apiconfig.json` in the root directy and fill in the secrets from above. These values are used to fetch data for the various commands of Sejong-bot.
