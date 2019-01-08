@@ -168,10 +168,12 @@ module.exports = class KRDicApi {
       const senses = item.findall('sense');
       entry.entryDefinitions = [];
       senses.forEach((sense) => {
-        const def = {
-          definitionKorean: sense.find('definition').text,
-          definitionTrans: sense.find('translation').find('trans_dfn').text,
-        };
+        const def = {};
+        const definition = sense.find('definition');
+        const translation = sense.find('translation');
+
+        if (definition) def.definitionKorean = definition.text;
+        if (translation) def.definitionTrans = translation.find('trans_dfn').text;
         entry.entryDefinitions.push(def);
       });
       this.dicEntries.push(entry);
