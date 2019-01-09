@@ -7,6 +7,7 @@ module.exports = {
   description: 'Search the dictionary for a Korean word.',
   longdescription: 'Searches the dictionary for the Korean word provided and lists found results along with respective meanings. Results come from the National Institute of Korean Language\'s Korean-English Learners\' Dictionary.\r\n\r\nEnglish definitions are displayed by default.\r\n\r\nUse the Korean / English flag reactions to swap the language of the meanings, or use the book reaction to bookmark the message to DMs.',
   aliases: ['w'],
+  args: true,
   usage: `${prefix}word 나무`,
   cooldown: 5,
   execute(message, args) {
@@ -21,6 +22,7 @@ module.exports = {
 
       if (result.length === 0) {
         answerMessage.edit(enEmbed);
+        return;
       }
 
       let en = true;
