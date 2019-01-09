@@ -55,7 +55,7 @@ module.exports = {
       let s = `Example sentences for **${query}**:\r\n\r\n`;
       let i;
       for (i = 0; i < searchResults.length; i += 1) {
-        s += `**${i + 1}.** ${searchResults[i].example}\r\n\r\n`;
+        s += `**${i + 1}.** ${searchResults[i].example.replace(query, `**__${query}__**`)}\r\n\r\n`;
       }
       embed.setDescription(s);
       if (!isDM) {
