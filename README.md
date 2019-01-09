@@ -11,7 +11,7 @@ Sejong-bot is a Korean language bot targeted towards Korean learners and enthusi
 ## Commands
 
 ### ~word (~w)
-<img src="https://i.imgur.com/Zlw00b7.gifv" width="450px">
+<img src="https://i.imgur.com/Zlw00b7.gif" width="450px">
 
 This command performs a dictionary search for a given parameter presents the results to the user in a precise manner. Results include the word-type, as well as the meanings of the word both in English and in Korean. Users can use reactions to switch the language of the meanings or bookmark the result.
 
