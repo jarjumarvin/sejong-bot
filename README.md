@@ -1,24 +1,28 @@
 # Who is Sejong-bot?
 Sejong-bot is a Korean language bot targeted towards Korean learners and enthusiats. It supports features such as word definitions in Korean and English, example sentences and neural machine translation. Users can also bookmark past searches to their DM's.
 
-<div style="text-align:center"><img src ="https://i.ibb.co/SP91Rkx/image.png" /></div>
-
 ## Data Sources
 - [Dictionary](https://krdict.korean.go.kr/openApi/openApiInfo)
-    - Korean vocabulary definitions and their English translations
     - Example sentences
+    - [Definitions and Word Info](https://github.com/jarjumarvin/krdict-api) from a scraper I made
 - [Papago NMT](https://developers.naver.com/docs/nmt/reference/)
     - Neural machine translation service supporting multiple languages
 
 ## Commands
 
 ### ~word (~w)
+<img src="https://i.imgur.com/Zlw00b7.gif" width="450px">
+
 This command performs a dictionary search for a given parameter presents the results to the user in a precise manner. Results include the word-type, as well as the meanings of the word both in English and in Korean. Users can use reactions to switch the language of the meanings or bookmark the result.
 
 ### ~examples (~e)
+<img src="https://i.imgur.com/j7JXgls.png" width="450px">
+
 Returns a list of Korean example sentences including a word given. Users can bookmark the result.
 
 ### ~papago (~p, ~ppg)
+<img src="https://i.imgur.com/enoeuWF.png" width="450px">
+
 Uses Papago's Neural Machine Translation to translate a given text between two given languages. Translates from Korean to English by default but users can specify source and target language using `~papago en>ko`. Available language codes can be seen using `~help papago`.
 
 ## Installation
