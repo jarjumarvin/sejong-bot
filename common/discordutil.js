@@ -55,7 +55,7 @@ module.exports = {
       let s = `Example sentences for **${query}**:\r\n\r\n`;
       let i;
       for (i = 0; i < searchResults.length; i += 1) {
-        s += `**${i + 1}.** ${searchResults[i].example}\r\n\r\n`;
+        s += `**${i + 1}.** ${searchResults[i].example.replace(query, `**__${query}__**`)}\r\n\r\n`;
       }
       embed.setDescription(s);
       if (!isDM) {
@@ -118,14 +118,18 @@ module.exports = {
             const sense = entry.senses[j];
             let d;
             if (language === 'en') {
-              d = `${j + 1}. __${sense.title}__\r\n${sense.trans}`;
+              d = `${j + 1}. __${sense.meaning}__\r\n${sense.translation}`;
             } else if (language === 'ko') {
-              d = `${j + 1}. __${sense.title}__\r\n${sense.def}`;
+              d = `${j + 1}. __${sense.meaning}__\r\n${sense.definition}`;
             }
             defs.push(d);
           }
         }
-        embed.addField(`${entry.word} ${entry.hanja ? ` (${entry.hanja}) ` : ''} (${entry.transPos})`, defs.join('\n'));
+        if (language === 'en') {
+          embed.addField(`${entry.word} ${entry.hanja ? ` (${entry.hanja}) ` : ''} (${entry.wordTypeTranslated})`, defs.join('\n'));
+        } else if (language === 'ko') {
+          embed.addField(`${entry.word} ${entry.hanja ? ` (${entry.hanja}) ` : ''} (${entry.wordType})`, defs.join('\n'));
+        }
       });
     }
     return embed;
