@@ -3,8 +3,8 @@ Sejong-bot is a Korean language bot targeted towards Korean learners and enthusi
 
 ## Data Sources
 - [Dictionary](https://krdict.korean.go.kr/openApi/openApiInfo)
-    - Korean vocabulary definitions and their English translations
     - Example sentences
+    - [Definitions and Word Info](https://github.com/jarjumarvin/krdict-api) from a scraper I made
 - [Papago NMT](https://developers.naver.com/docs/nmt/reference/)
     - Neural machine translation service supporting multiple languages
 
