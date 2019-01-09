@@ -104,4 +104,30 @@ module.exports = {
     embed.addField('Cooldown', command.cooldown ? `${command.cooldown} seconds` : 'None', true);
     return embed;
   },
+  createDevSearchEmbed(language, query, username, isDM, searchResults) {
+    const embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
+    if (searchResults.length === 0) {
+      embed.addField('Error', 'No results have been found');
+    } else {
+      this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark the result.' : ''}`);
+      searchResults.forEach((entry) => {
+        const defs = [];
+        let j;
+        if (entry.senses) {
+          for (j = 0; j < entry.senses.length; j += 1) {
+            const sense = entry.senses[j];
+            let d;
+            if (language === 'en') {
+              d = `${j + 1}. __${sense.title}__\r\n${sense.trans}`;
+            } else if (language === 'ko') {
+              d = `${j + 1}. __${sense.title}__\r\n${sense.def}`;
+            }
+            defs.push(d);
+          }
+        }
+        embed.addField(`${entry.word} ${entry.hanja ? ` (${entry.hanja}) ` : ''} (${entry.transPos})`, defs.join('\n'));
+      });
+    }
+    return embed;
+  },
 };
