@@ -1,5 +1,5 @@
+const KrDicApi = require('krdict-api');
 const DiscordUtil = require('../common/discordutil.js');
-const Scraper = require('../api/scraper.js');
 const { prefix } = require('../config.json');
 
 module.exports = {
@@ -12,8 +12,8 @@ module.exports = {
   execute(message, args) {
     const isDM = message.channel.type !== 'text';
     const q = args.join(' ');
-    const s = new Scraper();
-    const promise = s.searchWords(q);
+    const api = new KrDicApi();
+    const promise = api.searchWords(q, 5, 7);
 
     function send(result, answerMessage) {
       const enEmbed = DiscordUtil.createDevSearchEmbed('en', q, message.author.username, isDM, result);
@@ -65,7 +65,7 @@ module.exports = {
     const pendingEmbed = DiscordUtil.createPendingEmbed(message.author.username);
     message.channel.send(pendingEmbed).then((answerMessage) => {
       promise.then((result) => {
-        send(s.parseResult(result), answerMessage);
+        send(result, answerMessage);
       }, (err) => {
         throw new Error(err);
       });
