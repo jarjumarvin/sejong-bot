@@ -1,6 +1,7 @@
 const KrDicApi = require('krdict-api');
 const DiscordUtil = require('../common/discordutil.js');
 const { prefix } = require('../config.json');
+const Paginator = require('../common/paginator');
 
 module.exports = {
   name: 'word',
@@ -25,43 +26,9 @@ module.exports = {
         return;
       }
 
-      let en = true;
-      let sent = false;
-
-      const reactionFilter = (reaction, user) => ['🇰🇷', '🇬🇧', '📖'].includes(reaction.emoji.name) && user.id === message.author.id;
-      answerMessage.edit(enEmbed)
-        .then(msg => msg.react('🇬🇧'))
-        .then(enReact => enReact.message.react('🇰🇷'))
-        .then((krReact) => {
-          if (!isDM) krReact.message.react('📖');
-          const collector = krReact.message
-            .createReactionCollector(reactionFilter, { time: 120000 });
-
-          collector.on('collect', (r) => {
-            if (r.emoji.name === '🇬🇧') {
-              en = true;
-              r.message.edit(enEmbed);
-            } else if (r.emoji.name === '🇰🇷') {
-              en = false;
-              r.message.edit(krEmbed);
-            } else if (r.emoji.name === '📖' && !isDM && !sent) {
-              sent = true;
-            }
-          });
-
-          collector.on('end', () => {
-            if (en) {
-              DiscordUtil.setEmbedFooter(enEmbed, 'You can no longer use emojis to toggle the language. Anyone can still bookmark.');
-              answerMessage.edit(enEmbed);
-            } else {
-              DiscordUtil.setEmbedFooter(enEmbed, 'You can no longer use emojis to toggle the language. Anyone can still bookmark.');
-              answerMessage.edit(krEmbed);
-            }
-          });
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
+      const pages = [enEmbed, krEmbed];
+      const paginator = new Paginator(message.author, pages, '🇬🇧', '🇰🇷', false, true);
+      paginator.start(answerMessage);
     }
 
     const pendingEmbed = DiscordUtil.createPendingEmbed(message.author.username);
