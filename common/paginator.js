@@ -1,3 +1,5 @@
+const DiscordUtil = require('../common/discordutil.js');
+
 module.exports = class Paginator {
   constructor(author, pages, back, next, firstLast, bookmark) {
     this.author = author;
@@ -60,6 +62,11 @@ module.exports = class Paginator {
             }
             this.refresh();
           });
+
+          this.collector.on('end', () => {
+            DiscordUtil.setEmbedFooter(this.pages[this.current], 'You can no longer prowse pages. Anyone can bookmark this message.');
+            this.refresh();
+          });
         });
     } else if (this.pages.length > 2) {
       pendingMessage.edit(this.pages[0])
@@ -111,6 +118,11 @@ module.exports = class Paginator {
               default:
                 break;
             }
+            this.refresh();
+          });
+
+          this.collector.on('end', () => {
+            DiscordUtil.setEmbedFooter(this.pages[this.current], 'You can no longer prowse pages. Anyone can bookmark this message.');
             this.refresh();
           });
         });
