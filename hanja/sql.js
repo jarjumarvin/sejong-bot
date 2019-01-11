@@ -12,6 +12,7 @@ module.exports = class Hanja {
       host: 'localhost',
       dialect: 'sqlite',
       operatorsAliases: false,
+      logging: false,
 
       pool: {
         max: 5,
