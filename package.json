@@ -29,7 +29,9 @@
     "krdict-api": "0.0.4",
     "promise": "^8.0.2",
     "request": "^2.88.0",
-    "roman-numeral": "^0.2.6"
+    "roman-numeral": "^0.2.6",
+    "sequelize": "^4.42.0",
+    "sqlite3": "^4.0.4"
   },
   "devDependencies": {
     "eslint": "^5.11.1",

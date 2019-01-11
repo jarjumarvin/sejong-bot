@@ -80,7 +80,7 @@ module.exports = {
     embed.setFooter(footer, avatar);
   },
   createHelpEmbed(commands) {
-    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** or **${prefix}h <command>** to see information about a specific command.`);
+    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
     commands.forEach((c) => {
       if (c.name === 'help') return;
       const {
@@ -133,5 +133,63 @@ module.exports = {
       });
     }
     return embed;
+  },
+  createHanjaEmbeds(query, username, isDM, results) {
+    const pages = [];
+    if (results.similarwords.length === 0 && results.hanjas.length === 0) {
+      const embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
+      embed.addField('Error', 'No results have been found');
+      pages.push(embed);
+    } else {
+      const total = results.hanjas.length + results.similarwords.length;
+      const pageLength = 10;
+      let embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
+      let counter = 0;
+      let currentHanjas = [];
+      let currentSimilarWords = [];
+      let hanjaCount = 0;
+      let similarWordCount = 0;
+      for (let i = total - 1; i >= 0; i -= 1) {
+        if ((counter !== 0 && counter % pageLength === 0) || i === 0) {
+          if (currentHanjas.length > 0) {
+            const hanja = results.hanjas.shift();
+            if (hanja) {
+              currentHanjas.push(`${hanjaCount + 1}. **${hanja.hanja}**\r\n${hanja.definition}`);
+              hanjaCount += 1;
+            }
+            embed.addField('Hanjas', currentHanjas.join('\r\n'));
+          }
+          if (currentSimilarWords.length > 0) {
+            const word = results.similarwords.shift();
+            if (word) {
+              currentSimilarWords.push(`${similarWordCount + 1}. **${word.hanja}** **(${word.hangul})**\r\n${word.english}`);
+              similarWordCount += 1;
+            }
+            embed.addField('Related Words', currentSimilarWords.join('\r\n'));
+          }
+          currentHanjas = [];
+          currentSimilarWords = [];
+          pages.push(embed);
+          embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
+        }
+        if (results.hanjas.length) {
+          const hanja = results.hanjas.shift();
+          currentHanjas.push(`${hanjaCount + 1}. **${hanja.hanja}**\r\n${hanja.definition}`);
+          hanjaCount += 1;
+        } else if (results.similarwords.length) {
+          const word = results.similarwords.shift();
+          currentSimilarWords.push(`${similarWordCount + 1}. **${word.hanja}** - **${word.hangul}**\r\n${word.english}`);
+          similarWordCount += 1;
+        }
+        counter += 1;
+      }
+    }
+    const pageCount = pages.length;
+    if (pageCount > 1) {
+      pages.forEach((page, index) => {
+        page.setAuthor(`Sejong (Page ${index + 1} of ${pageCount})`, 'https://i.imgur.com/v95B0db.jpg');
+      });
+    }
+    return pages;
   },
 };

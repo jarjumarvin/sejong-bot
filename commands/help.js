@@ -2,7 +2,6 @@ const DiscordUtil = require('../common/discordutil');
 
 module.exports = {
   name: 'help',
-  aliases: ['h'],
   cooldown: 3,
   execute(message, args) {
     const { commands } = message.client;
