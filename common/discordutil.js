@@ -4,6 +4,34 @@ const types = require('./pos.js');
 const langs = require('./langs.js');
 
 module.exports = {
+  bookmark(message, user) {
+    if (!user.dmChannel) {
+      user.createDM();
+    }
+
+    const attachment = message.attachments.first();
+    let image;
+    if (attachment && (attachment.width || attachment.height)) {
+      image = attachment.url;
+    }
+
+    if (!image && !message.content) {
+      if (message.embeds[0]) {
+        const embed = message.embeds[0];
+        user.send(`Sent by: ${message.author.username}`, { embed }).then(msg => msg.react('❌'));
+        return;
+      }
+    }
+
+    const embed = new Discord.RichEmbed()
+      .setColor(0xDF2B40)
+      .setAuthor(`${message.author.username} said:`, message.author.avatarURL ? message.author.avatarURL : undefined)
+      .setDescription(`${message.content}${image ? `\r\n\r\n${image}` : ''}`)
+      .setImage(image)
+      .setTimestamp(message.editedTimestamp || message.createdTimestamp);
+
+    user.send(embed).then(msg => msg.react('❌'));
+  },
   createBasicEmbed(name) {
     return new Discord.RichEmbed()
       .setColor(accentColor)

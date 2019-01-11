@@ -21,7 +21,7 @@ module.exports = class Paginator {
     this.hasPermission = this.message.member.hasPermission('MANAGE_MESSAGES');
     if (this.pages.length === 1) {
       pendingMessage.edit(this.pages[0]);
-      if (this.bookmark) pendingMessage.react('📖');
+      if (this.bookmark) pendingMessage.react('🔖');
     } else if (this.pages.length === 2) {
       pendingMessage.edit(this.pages[0])
         .then(msg => msg.react(this.back))
@@ -30,7 +30,7 @@ module.exports = class Paginator {
           this.message = backReact.message;
           const emojis = [this.back, this.next];
           if (this.bookmark) {
-            this.message.react('📖');
+            this.message.react('🔖');
           }
           const reactionFilter = (reaction, user) => {
             if (reaction.me && emojis.includes(reaction.emoji.name)) {
@@ -78,7 +78,7 @@ module.exports = class Paginator {
           this.message = last.message;
           const emojis = ['↙', this.back, this.next, '↘'];
           if (this.bookmark) {
-            this.message.react('📖');
+            this.message.react('🔖');
           }
           const reactionFilter = (reaction, user) => {
             if (reaction.me && emojis.includes(reaction.emoji.name)) {
