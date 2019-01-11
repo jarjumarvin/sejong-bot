@@ -16,6 +16,7 @@ module.exports = class Paginator {
 
   start(pendingMessage) {
     this.message = pendingMessage;
+    this.hasPermission = this.message.member.hasPermission('MANAGE_MESSAGES');
     if (this.pages.length === 1) {
       pendingMessage.edit(this.pages[0]);
       if (this.bookmark) pendingMessage.react('📖');
@@ -40,7 +41,9 @@ module.exports = class Paginator {
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
           this.collector.on('collect', (reaction) => {
-            reaction.remove(this.author).catch();
+            if (this.hasPermission) {
+              reaction.remove(this.author);
+            }
             switch (reaction.emoji.toString()) {
               case this.back:
                 if (this.current !== 0) {
@@ -81,7 +84,9 @@ module.exports = class Paginator {
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
           this.collector.on('collect', (reaction) => {
-            reaction.remove(this.author).catch();
+            if (this.hasPermission) {
+              reaction.remove(this.author);
+            }
             switch (reaction.emoji.toString()) {
               case this.first:
                 if (this.current !== 0) {
