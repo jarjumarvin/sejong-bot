@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-
+const DiscordUtil = require('./common/discordutil');
 const { prefix, enabledCommands, status } = require('./config.json');
 const { discordToken } = require('./apiconfig.json');
 
@@ -31,11 +31,14 @@ client.on('messageReactionAdd', (reaction, user) => {
       reaction.message.delete();
     }
   }
-  if (reaction.message.author.id === client.user.id && reaction.emoji.name === '📖' && reaction.message.channel.type === 'text') {
-    if (reaction.message.reactions.find(rawReaction => rawReaction.me)
-    && user.id !== client.user.id) {
-      const embed = reaction.message.embeds[0];
-      user.send({ embed }).then(dm => dm.react('❌'));
+  if (reaction.emoji.name === '🔖' && reaction.message.channel.type === 'text') {
+    if (user.id !== client.user.id) {
+      if (reaction.message.author.id === client.user.id) {
+        const embed = reaction.message.embeds[0];
+        user.send({ embed }).then(msg => msg.react('❌'));
+      } else {
+        DiscordUtil.bookmark(reaction.message, user);
+      }
     }
   }
 });

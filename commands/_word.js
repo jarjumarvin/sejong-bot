@@ -26,12 +26,12 @@ module.exports = {
       let en = true;
       let sent = false;
 
-      const reactionFilter = (reaction, user) => ['🇰🇷', '🇬🇧', '📖'].includes(reaction.emoji.name) && user.id === message.author.id;
+      const reactionFilter = (reaction, user) => ['🇰🇷', '🇬🇧', '🔖'].includes(reaction.emoji.name) && user.id === message.author.id;
       answerMessage.edit(enEmbed)
         .then(msg => msg.react('🇬🇧'))
         .then(enReact => enReact.message.react('🇰🇷'))
         .then((krReact) => {
-          if (!isDM) krReact.message.react('📖');
+          if (!isDM) krReact.message.react('🔖');
           const collector = krReact.message
             .createReactionCollector(reactionFilter, { time: 120000 });
 
@@ -42,7 +42,7 @@ module.exports = {
             } else if (r.emoji.name === '🇰🇷') {
               en = false;
               r.message.edit(krEmbed);
-            } else if (r.emoji.name === '📖' && !isDM && !sent) {
+            } else if (r.emoji.name === '🔖' && !isDM && !sent) {
               sent = true;
             }
           });

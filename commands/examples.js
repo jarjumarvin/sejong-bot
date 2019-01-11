@@ -24,14 +24,14 @@ module.exports = {
         return;
       }
 
-      const reactionFilter = (reaction, user) => ['📖'].includes(reaction.emoji.name) && user.id === message.author.id;
+      const reactionFilter = (reaction, user) => ['🔖'].includes(reaction.emoji.name) && user.id === message.author.id;
       let sent = false;
       answerMessage.edit(exEmbed)
         .then((msg) => {
-          if (!isDM) msg.react('📖');
+          if (!isDM) msg.react('🔖');
           const collector = msg.createReactionCollector(reactionFilter, { time: 60000 });
           collector.on('collect', (r) => {
-            if (r.emoji.name === '📖') {
+            if (r.emoji.name === '🔖') {
               if (!isDM) {
                 if (!sent) {
                   sent = true;
