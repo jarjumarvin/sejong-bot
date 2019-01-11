@@ -40,11 +40,7 @@ module.exports = class Paginator {
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
           this.collector.on('collect', (reaction) => {
-            try {
-              reaction.remove(this.author);
-            } catch (err) {
-              console.err(err);
-            }
+            reaction.remove(this.author).catch(console.err);
             switch (reaction.emoji.toString()) {
               case this.back:
                 if (this.current !== 0) {
@@ -85,11 +81,7 @@ module.exports = class Paginator {
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
           this.collector.on('collect', (reaction) => {
-            try {
-              reaction.remove(this.author);
-            } catch (err) {
-              console.err(err);
-            }
+            reaction.remove(this.author).catch(console.err);
             switch (reaction.emoji.toString()) {
               case this.first:
                 if (this.current !== 0) {
