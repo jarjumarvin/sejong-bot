@@ -1,7 +1,7 @@
 {
-    "prefix": "`",
+    "prefix": "~",
     "accentColor": "#C27C0E",
     "avatar": "https://i.imgur.com/v95B0db.jpg",
     "status": ["WATCHING", "@ me for hangoolies help!"],
-    "enabledCommands": ["word", "examples", "papago", "help", "hanja"]
+    "enabledCommands": ["word", "examples", "papago", "hanja", "help"]
 }
