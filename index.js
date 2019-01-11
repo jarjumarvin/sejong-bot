@@ -33,7 +33,7 @@ client.on('messageReactionAdd', (reaction, user) => {
   }
   if (reaction.emoji.name === '🔖' && reaction.message.channel.type === 'text') {
     if (user.id !== client.user.id) {
-      if (reaction.message.author.id === client.user.id) {
+      if (reaction.message.embeds[0] && reaction.message.author.id === client.user.id) {
         const embed = reaction.message.embeds[0];
         user.send({ embed }).then(msg => msg.react('❌'));
       } else {
