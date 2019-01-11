@@ -5,8 +5,9 @@ const Paginator = require('../common/paginator');
 
 module.exports = {
   name: 'hanja',
-  description: 'Search for Hanja.',
-  aliases: ['hj'],
+  description: 'Search for Hanja in English, Korean, or Hanja itself.',
+  longdescription: 'Searches the hanja database for meanings of hanjas and related words that occur in the provided argument.\r\n Use the reactions below the message to browse pages or bookmark the result to DMs.',
+  aliases: ['h'],
   args: true,
   usage: `${prefix}hanja 韓國`,
   cooldown: 5,
@@ -22,7 +23,6 @@ module.exports = {
           isDM,
           results,
         );
-        console.log(results.empty);
         const paginator = new Paginator(message.author, pages, '◀', '▶', true, !results.empty);
         paginator.start(pendingMessage);
       });
