@@ -80,7 +80,7 @@ module.exports = {
     embed.setFooter(footer, avatar);
   },
   createHelpEmbed(commands) {
-    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** or **${prefix}h <command>** to see information about a specific command.`);
+    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
     commands.forEach((c) => {
       if (c.name === 'help') return;
       const {
