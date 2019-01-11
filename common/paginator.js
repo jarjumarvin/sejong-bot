@@ -18,7 +18,11 @@ module.exports = class Paginator {
 
   start(pendingMessage) {
     this.message = pendingMessage;
-    this.hasPermission = this.message.member.hasPermission('MANAGE_MESSAGES');
+    if (this.message.member) {
+      this.hasPermission = this.message.member.hasPermission('MANAGE_MESSAGES');
+    } else {
+      this.hasPermission = false;
+    }
     if (this.pages.length === 1) {
       pendingMessage.edit(this.pages[0]);
       if (this.bookmark) pendingMessage.react('🔖');
