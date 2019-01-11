@@ -17,7 +17,7 @@ module.exports = {
     if (searchResults.length === 0) {
       embed.addField('Error', 'No results have been found');
     } else {
-      this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark the result.' : ''}`);
+      this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark this message.' : ''}`);
       let big = 0;
       searchResults.forEach((entry) => {
         if (embed.fields.length < 6 && big < 2) {
@@ -59,7 +59,7 @@ module.exports = {
       }
       embed.setDescription(s);
       if (!isDM) {
-        this.setEmbedFooter(embed, 'Anyone can bookmark this result using the book reaction.');
+        this.setEmbedFooter(embed, 'Anyone can bookmark this message.');
       }
     }
     return embed;
@@ -73,6 +73,7 @@ module.exports = {
       embed.addField('Result', result.text);
       embed.addField('Original Language', langs[result.source], true);
       embed.addField('Target Language', langs[result.target], true);
+      this.setEmbedFooter(embed, 'Anyone can bookmark this message.');
     }
     return embed;
   },
@@ -109,7 +110,7 @@ module.exports = {
     if (searchResults.length === 0) {
       embed.addField('Error', 'No results have been found');
     } else {
-      this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark the result.' : ''}`);
+      this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark this message.' : ''}`);
       searchResults.forEach((entry) => {
         const defs = [];
         let j;
@@ -136,7 +137,8 @@ module.exports = {
   },
   createHanjaEmbeds(query, username, isDM, results) {
     const pages = [];
-    if (results.similarwords.length === 0 && results.hanjas.length === 0) {
+    const isEmpty = results.similarwords.length === 0 && results.hanjas.length === 0;
+    if (isEmpty) {
       const embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
       embed.addField('Error', 'No results have been found');
       pages.push(embed);
@@ -188,7 +190,10 @@ module.exports = {
     if (pageCount > 1) {
       pages.forEach((page, index) => {
         page.setAuthor(`Sejong (Page ${index + 1} of ${pageCount})`, 'https://i.imgur.com/v95B0db.jpg');
+        this.setEmbedFooter(page, `${username} can browse pages. ${!isDM ? 'Anyone can bookmark this message.' : ''}`);
       });
+    } else if (pageCount === 1 && !isEmpty) {
+      this.setEmbedFooter(pages[0], 'Anyone can bookmark this message.');
     }
     return pages;
   },
