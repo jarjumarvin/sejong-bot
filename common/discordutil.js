@@ -149,7 +149,7 @@ module.exports = {
       let currentSimilarWords = [];
       let hanjaCount = 0;
       let similarWordCount = 0;
-      for (let i = total - 1; i >= 0; i -= 1) {
+      for (let i = total; i >= 0; i -= 1) {
         if ((counter !== 0 && counter % pageLength === 0) || i === 0) {
           if (currentHanjas.length > 0) {
             const hanja = results.hanjas.shift();
