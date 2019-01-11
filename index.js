@@ -65,7 +65,6 @@ client.on('raw', async (event) => {
 
 client.on('message', (message) => {
   if (message.mentions.users.array().length === 1 && message.mentions.users.has(client.user.id)) {
-    console.log('yes');
     message.reply(`type **${prefix}help** to see my commands.`);
     return;
   }
