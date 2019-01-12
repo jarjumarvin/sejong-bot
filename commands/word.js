@@ -27,7 +27,7 @@ module.exports = {
       }
 
       const pages = [enEmbed, krEmbed];
-      const paginator = new Paginator(message.author, pages, '🇬🇧', '🇰🇷', false, true);
+      const paginator = new Paginator(message.author, pages, '🇬🇧', '🇰🇷', false, true, 'You can no longer switch languages. Anyone can still bookmark this message.');
       paginator.start(answerMessage);
     }
 
