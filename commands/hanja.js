@@ -23,7 +23,7 @@ module.exports = {
           isDM,
           results,
         );
-        const paginator = new Paginator(message.author, pages, '◀', '▶', true, !results.empty, 'You can no browse pages. Anyone can still bookmark this message.');
+        const paginator = new Paginator(message.author, pages, '◀', '▶', true, !results.empty, 'You can no longer browse pages. Anyone can still bookmark this message.');
         paginator.start(pendingMessage);
       });
     });
