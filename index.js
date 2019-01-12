@@ -32,9 +32,9 @@ client.on('messageReactionAdd', (reaction, user) => {
       if (reaction.message.embeds[0] && reaction.message.author.id === client.user.id) {
         const embed = reaction.message.embeds[0];
         user.send({ embed }).then(msg => msg.react('❌'));
-        console.log(`${reaction.message.author.username} - result bookmark `);
+        console.log(`${user.username} - result bookmark `);
       } else {
-        console.log(`${reaction.message.author.username} - message bookmark `);
+        console.log(`${user.username} - message bookmark `);
         DiscordUtil.bookmark(reaction.message, user);
       }
     }

@@ -14,8 +14,8 @@ module.exports = {
   args: true,
   usage: `${prefix}papago ko-en 안녕하세요`,
   cooldown: 5,
+
   execute(message, args) {
-    // get language codes or use default
     let source = 'ko';
     let target = 'en';
 
@@ -26,20 +26,17 @@ module.exports = {
     }
 
     if (!langs[source] || !langs[target]) {
-      console.log(`tried to translate ${source}>${target}`);
       message.reply(`enter a valid combination of languages. The available combinations are:
         \r\nko<->en\r\nko<->zh-CN\r\nko<->zh-TW\r\nko<->es\r\nko<->fr\r\nko<->vi\r\nko<->th\r\nko<->id\r\nen<->ja\r\nen<->fr`);
       return;
     }
 
     if (source === target) {
-      console.log(`same language ${source}>${target}`);
       message.reply('source and target language must be different');
       return;
     }
 
     if (!args.length) {
-      console.log('no text after languages');
       message.reply('enter a text to translate.');
       return;
     }

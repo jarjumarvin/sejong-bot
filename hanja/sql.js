@@ -47,7 +47,7 @@ module.exports = class Hanja {
     const similarwords = await this.sequelize
       .query(`select hanja, hangul, english from (select hanja, hangul, english from hanjas where hidden_index match ${query} union select hanja, hangul, english from hanjas where english match ${query} union select hanja, hangul, english from hanjas where hangul match ${query} union select hanja, hangul, english from hanjas where hanjas match ${query}) order by hangul`, {
         model: this.SimilarWord,
-        mapToModel: true, // pass true here if you have any mapped fields
+        mapToModel: true,
       });
 
     similarwords.forEach((similarword) => {
@@ -72,7 +72,7 @@ module.exports = class Hanja {
       const hanjas = await this.sequelize
         .query(`select hanjas, definition from hanja_definition where hanjas = '${character}'`, {
           model: this.Hanja,
-          mapToModel: true, // pass true here if you have any mapped fields
+          mapToModel: true,
         });
 
       hanjas.forEach((hanja) => {
