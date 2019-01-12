@@ -16,12 +16,8 @@ const cooldowns = new Discord.Collection();
 client.once('ready', () => {
   client.user.setActivity(status[1], { type: status[0] });
   console.log('(-----------------------SEJONG-----------------------)');
-  console.log(`Username: ${client.user.username}`);
-  console.log(`Prefix: ${prefix}`);
-  console.log(`Status: (${status[0].toLowerCase()} ${status[1]})`);
-  console.log('(----------------------COMMANDS----------------------)');
-  console.log(client.commands.map(e => e.name));
-  console.log('(--------------------LOADING COMPLETE----------------)');
+  console.log(`(----Logged in as ${client.user.username} using prefix ${prefix}`);
+  console.log('(----------------------------------------------------)');
 });
 
 client.on('messageReactionAdd', (reaction, user) => {

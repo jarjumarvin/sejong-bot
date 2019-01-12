@@ -1,7 +1,7 @@
 const DiscordUtil = require('../common/discordutil.js');
 
 module.exports = class Paginator {
-  constructor(author, pages, back, next, firstLast, bookmark) {
+  constructor(author, pages, back, next, firstLast, bookmark, endMessage) {
     this.author = author;
 
     this.current = 0;
@@ -12,6 +12,7 @@ module.exports = class Paginator {
     this.back = back;
     this.next = next;
     this.last = '↘';
+    this.endMessage = endMessage;
 
     this.bookmark = bookmark;
   }
@@ -68,7 +69,7 @@ module.exports = class Paginator {
           });
 
           this.collector.on('end', () => {
-            DiscordUtil.setEmbedFooter(this.pages[this.current], 'You can no longer prowse pages. Anyone can bookmark this message.');
+            DiscordUtil.setEmbedFooter(this.pages[this.current], this.endMessage);
             this.refresh();
           });
         });
@@ -126,7 +127,7 @@ module.exports = class Paginator {
           });
 
           this.collector.on('end', () => {
-            DiscordUtil.setEmbedFooter(this.pages[this.current], 'You can no longer prowse pages. Anyone can bookmark this message.');
+            DiscordUtil.setEmbedFooter(this.pages[this.current], this.endMessage);
             this.refresh();
           });
         });
