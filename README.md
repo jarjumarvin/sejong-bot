@@ -7,6 +7,7 @@ Sejong-bot is a Korean language bot targeted towards Korean learners and enthusi
     - [Definitions and Word Info](https://github.com/jarjumarvin/krdict-api) from a scraper I made
 - [Papago NMT](https://developers.naver.com/docs/nmt/reference/)
     - Neural machine translation service supporting multiple languages
+- Hanja database from [dbravender/hanjadic](https://github.com/dbravender/hanjadic)
 
 ## Commands
 
@@ -14,6 +15,10 @@ Sejong-bot is a Korean language bot targeted towards Korean learners and enthusi
 <img src="https://i.imgur.com/Zlw00b7.gif" width="450px">
 
 This command performs a dictionary search for a given parameter presents the results to the user in a precise manner. Results include the word-type, as well as the meanings of the word both in English and in Korean. Users can use reactions to switch the language of the meanings or bookmark the result.
+
+### ~hanja (~h)
+<img src="https://i.imgur.com/N18cYT8.png" width="450px">
+Searches the hanja database for meanings of hanjas and related words that occur in the provided argument. Scans the word an returns all relevant results including meaning of single hanjas, meanings of single hanjas, as well as related words.  Users can use reactions to browse pages of results or bookmark the result.
 
 ### ~examples (~e)
 <img src="https://i.imgur.com/j7JXgls.png" width="450px">
