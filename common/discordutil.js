@@ -151,7 +151,9 @@ module.exports = {
             } else if (language === 'ko') {
               d = `${j + 1}. __${sense.meaning}__\r\n${sense.definition}`;
             }
-            defs.push(d);
+            if (`${defs.join('\n')}\n${d}`.length < 1024) {
+              defs.push(d);
+            }
           }
         }
         if (language === 'en') {
