@@ -52,8 +52,7 @@ module.exports = {
     promise.then((result) => {
       send(result);
     }, (err) => {
-      console.log(err);
-      throw new Error('Failed to Translate');
+      throw new Error(err);
     });
   },
 };
