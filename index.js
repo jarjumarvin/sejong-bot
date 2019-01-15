@@ -64,6 +64,8 @@ client.on('raw', async (event) => {
   client.emit(events[event.t], reaction, user);
 });
 
+client.on('error', error => console.log(error));
+
 client.on('message', (message) => {
   if (message.mentions.users.array().length === 1 && message.mentions.users.has(client.user.id)) {
     message.reply(`type **${prefix}help** to see my commands.`);
@@ -120,4 +122,5 @@ client.on('message', (message) => {
     message.reply('there was an error trying to execute that command!');
   }
 });
+
 client.login(discordToken);
