@@ -18,8 +18,8 @@ module.exports = {
     const promise = api.searchWords(q, 5, 7);
 
     function send(result, answerMessage) {
-      const enEmbed = DiscordUtil.createDevSearchEmbed('en', q, message.author.username, isDM, result);
-      const krEmbed = DiscordUtil.createDevSearchEmbed('ko', q, message.author.username, isDM, result);
+      const enEmbed = DiscordUtil.createWordSearchEmbed('en', q, message.author.username, isDM, result);
+      const krEmbed = DiscordUtil.createWordSearchEmbed('ko', q, message.author.username, isDM, result);
 
       if (result.length === 0) {
         answerMessage.edit(enEmbed);
