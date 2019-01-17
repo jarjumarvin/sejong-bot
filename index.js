@@ -118,7 +118,7 @@ client.on('message', (message) => {
 });
 
 // IGNORE ERRORS
-client.on('error', error => console.log(error));
+client.on('error', error => console.error(error));
 
 // LOGIN
 client.once('ready', () => {
