@@ -164,6 +164,7 @@ module.exports = {
     const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
     commands.forEach((c) => {
       if (c.name === 'help') return;
+      if (c.devOnly) return;
       const {
         name,
         aliases,
