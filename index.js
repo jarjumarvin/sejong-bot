@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const DiscordUtil = require('./common/discordutil');
-const { prefix, enabledCommands, status } = require('./config.json');
+const { prefix, enabledCommands, status, devIds} = require('./config.json');
 const { discordToken } = require('./apiconfig.json');
 
 const client = new Discord.Client();
@@ -72,6 +72,8 @@ client.on('message', (message) => {
                || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
+
+  if (command.devOnly && !devIds.includes(message.author.id)) return;
 
   if (command.args && !args.length) {
     let reply = `You didn't provide any arguments, ${message.author}!`;
