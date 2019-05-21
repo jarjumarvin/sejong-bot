@@ -67,15 +67,17 @@ client.on('message', (message) => {
   }
 
   if (!message.content.startsWith(prefix) || message.author.bot) {
-    if (enableSejongReply) {
-      try {
-        if (message.content.toLowerCase().includes('sejong')) {
-          if (message.channel.type === 'text' && message.guild.id === llkId) {
-            message.channel.send('<:sejbless:296691477822701569>');
+    if (!message.author.bot) {
+      if (enableSejongReply) {
+        try {
+          if (message.content.toLowerCase().includes('sejong')) {
+            if (message.channel.type === 'text' && message.guild.id === llkId) {
+              message.channel.send('<:sejbless:296691477822701569>');
+            }
           }
+        } catch (error) {
+          return;
         }
-      } catch (error) {
-        return;
       }
     }
     return;
