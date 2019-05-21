@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const DiscordUtil = require('./common/discordutil');
-const { prefix, enabledCommands, status, devIds, llkId } = require('./config.json');
+const {
+  prefix, enabledCommands, status, devIds, llkId, enableSejongReply,
+} = require('./config.json');
 const { discordToken } = require('./apiconfig.json');
 
 const client = new Discord.Client();
@@ -65,14 +67,16 @@ client.on('message', (message) => {
   }
 
   if (!message.content.startsWith(prefix) || message.author.bot) {
-    try {
-      if (message.content.toLowerCase().includes('sejong')) {
-        if (message.channel.type === 'text' && message.guild.id === llkId) {
-          message.channel.send('<:sejbless:296691477822701569>');
+    if (enableSejongReply) {
+      try {
+        if (message.content.toLowerCase().includes('sejong')) {
+          if (message.channel.type === 'text' && message.guild.id === llkId) {
+            message.channel.send('<:sejbless:296691477822701569>');
+          }
         }
+      } catch (error) {
+        return;
       }
-    } catch (error) {
-      return;
     }
     return;
   }
