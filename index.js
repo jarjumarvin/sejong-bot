@@ -72,7 +72,7 @@ client.on('message', (message) => {
         try {
           if (message.content.toLowerCase().includes('sejong')) {
             if (message.channel.type === 'text' && message.guild.id === llkId) {
-              message.channel.send('<:sejbless:296691477822701569>');
+              message.react(message.guild.emojis.get('296691477822701569'));
             }
           }
         } catch (error) {
