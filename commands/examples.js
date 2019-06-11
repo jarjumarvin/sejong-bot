@@ -1,5 +1,5 @@
 const DiscordUtil = require('../common/discordutil.js');
-const Krdicapi = require('../api/krdicapi.js');
+const ExampleSentenceAPI = require('../api/exampleapi.js');
 const { prefix } = require('../config.json');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
   cooldown: 5,
   execute(message, args) {
     const q = args.join(' ');
-    const api = new Krdicapi();
+    const api = new ExampleSentenceAPI();
     const isDM = message.channel.type !== 'text';
     const promise = api.searchExamples(q, message);
 
