@@ -70,7 +70,7 @@ client.on('message', (message) => {
     if (!message.author.bot) {
       if (enableSejongReply) {
         try {
-          if (message.content.toLowerCase().includes('sejong')) {
+          if (message.content.toLowerCase().includes('sejong') || message.content.toLowerCase().includes('세종')) {
             if (message.channel.type === 'text' && message.guild.id === llkId) {
               message.react(message.guild.emojis.get('296691477822701569'));
             }
