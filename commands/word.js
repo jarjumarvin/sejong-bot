@@ -1,4 +1,4 @@
-const KrDicApi = require('krdict-api');
+const KrDicApi = require('../api/krdicapi.js');
 const DiscordUtil = require('../common/discordutil.js');
 const { prefix } = require('../config.json');
 const Paginator = require('../common/paginator');

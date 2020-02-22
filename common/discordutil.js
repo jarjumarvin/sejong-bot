@@ -70,9 +70,9 @@ module.exports = {
           }
         }
         if (language === 'en') {
-          embed.addField(`${entry.word} ${entry.hanja ? ` (${entry.hanja}) ` : ''} (${entry.wordTypeTranslated})`, defs.join('\n'));
+          embed.addField(`**${entry.word}**${entry.hanja ? ` (${entry.hanja})` : ''} - ${entry.wordTypeTranslated}${entry.pronunciation ? ` - [${entry.pronunciation}]` : ''}${entry.stars > 0 ? '  ' + '★'.repeat(entry.stars) : ''}`, defs.join('\n'));
         } else if (language === 'ko') {
-          embed.addField(`${entry.word} ${entry.hanja ? ` (${entry.hanja}) ` : ''} (${entry.wordType})`, defs.join('\n'));
+          embed.addField(`**${entry.word}**${entry.hanja ? ` (${entry.hanja})` : ''} - ${entry.wordType}${entry.pronunciation ? ` - [${entry.pronunciation}]` : ''}${entry.stars > 0 ? '  ' + '★'.repeat(entry.stars) : ''}`, defs.join('\n'));
         }
       });
     }

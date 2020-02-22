@@ -1,183 +1,87 @@
-const querystring = require('querystring');
 const request = require('request');
-const et = require('elementtree');
-const { krDictUrl, krDictToken } = require('../apiconfig.json');
+const cheerio = require('cheerio');
 
-module.exports = class KRDicApi {
-  constructor() {
-    this.sort = 'dict';
-    this.sortOptions = {
-      Dictionary: 'dict',
-      Popular: 'popular',
-    };
+module.exports = class KrDicApi {
+  parseResult(html, maxSenses) {
+    const $ = cheerio.load(html, { normalizeWhitespace: true });
+    this.entries = $('.search_list').children();
+    const count = this.entries.length;
+    const dicEntries = [];
+    let i;
+    for (i = 0; i < count; i += 1) {
+      const dicEntry = {};
 
-    this.method = 'exact';
-    this.method_option = {
-      exact: 'exact',
-      include: 'include',
-      start: 'start',
-      end: 'end',
-    };
+      const entry = $(this.entries).eq(i).children();
+      const title = entry.eq(0);
 
-    this.num = 10;
-    this.translationEnabled = 'y';
-    this.advancedEnabled = 'n';
+      dicEntry.word = $(title).find('a').eq(0).text()
+        .replace(/\s+/g, ' ')
+        .trim();
+      const h = title.text().match(/\(.*\)/);
+      const p = title.text().match(/\[(.*?)\]/);
 
-    this.trans = 'English';
-    this.transOptions = {
-      'Full Translation': '0',
-      English: '1',
-      Japanese: '2',
-      French: '3',
-      Spanish: '4',
-      Arabic: '5',
-      Mongolian: '6',
-      Vietnamese: '7',
-      Russian: '8',
-    };
+      let s;
 
-    this.part = 'Word';
-    this.partOptions = {
-      Word: 'word',
-      IP: 'ip',
-      Definition: 'dfn',
-      Examples: 'exam',
-    };
+      if ($(title).find('.score_3').length > 0) s = 3;
+      else if ($(title).find('.score_2').length > 0) s = 2;
+      else if ($(title).find('.score_1').length > 0) s = 1;
+      else s = 0;
 
-    this.target = 'Headword';
-    this.targetOptions = {
-      Headword: 1,
-      Solve: 2,
-      Examples: 3,
-      'Original Language': 4,
-      Pronunciation: 5,
-      Utilization: 6,
-      Idiom: 7,
-      Proverb: 8,
-    };
+      dicEntry.stars = s;
 
-    this.multimedia = 'Full';
-    this.multiMediaOptions = {
-      Full: 0,
-      Photo: 1,
-      Annealing: 2,
-      Video: 3,
-      Animation: 4,
-      Sound: 5,
-      None: 6,
-    };
+      let hanja;
+      if (h) {
+        hanja = h[0].slice(1, -1).trim();
+      }
+      dicEntry.hanja = hanja;
 
-    this.searchMethod = 'Exact';
-    this.searchMethodOptions = {
-      Exact: 'exact',
-      Include: 'include',
-      Start: 'start',
-      End: 'end',
-    };
+      let pronunciation;
+      if (p && p[1]) {
+        pronunciation = p[1].trim();
+      }
 
-    this.start = 1;
+      dicEntry.pronunciation = pronunciation;
+  
+      dicEntry.wordType = $(title).find('em').eq(0).text()
+        .replace(/\s+/g, ' ')
+        .trim();
 
-    this.viewMethod = 'Word Info';
-    this.viewMethodOptions = {
-      'Word Info': 'word_info',
-      'Target Code': 'target_code',
-    };
+      dicEntry.wordTypeTranslated = $(title).find('em').eq(1).text()
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const senses = $(entry).eq(1).children();
+      const entrySenses = [];
+      let j;
+      for (j = 0; j < senses.length; j += 1) {
+        if(maxSenses && j > maxSenses) break;
+        const current = senses.eq(j).children();
+        const sense = {};
+        sense.meaning = current.eq(0).text()
+          .replace(/\s+/g, ' ')
+          .replace(/\d*\.\d*/, '')
+          .trim();
+
+        sense.definition = current.eq(1).text().replace(/\s+/g, ' ').trim();
+        sense.translation = current.eq(2).text().replace(/\s+/g, ' ').trim();
+        entrySenses.push(sense);
+      }
+      dicEntry.senses = entrySenses;
+      dicEntries.push(dicEntry);
+    }
+
+    if (dicEntries.length === 1 && dicEntries[0].word === '') return [];
+    return dicEntries;
   }
 
-  searchExamples(q) {
-    const url = `${krDictUrl}search?${
-      querystring.stringify({
-        key: krDictToken,
-        type_search: 'search',
-        part: this.partOptions.Examples,
-        method: this.method,
-        multimedia: this.multiMediaOptions[this.multimedia],
-        q,
-        sort: 'dict',
-      })
-    }`;
-
-    const options = {
-      url,
-      headers: {
-        'content-type': 'application/xml',
-        Accept: 'application/xml',
-      },
-    };
-
-    return new Promise((resolve, reject) => {
-      request(options, (error, response, body) => {
-        if (!error && response.statusCode === 200) resolve(body);
-        else reject(error);
-      });
-    });
-  }
-
-  searchWord(q) {
-    const url = `${krDictUrl}search?${
-      querystring.stringify({
-        key: krDictToken,
-        part: this.partOptions.Word,
-        q,
-        translated: this.translationEnabled,
-        trans_lang: this.transOptions[this.trans],
-        advanced: this.advancedEnabled,
-        target: this.targetOptions[this.target],
-        multimedia: this.multiMediaOptions[this.multimedia],
-        start: this.start,
-      })
-    }`;
-
-    const options = {
-      url,
-      headers: {
-        'content-type': 'application/xml',
-        Accept: 'application/xml',
-      },
-    };
-
+  searchWords(q, amount) {
+    this.url = `https://krdict.korean.go.kr/eng/dicSearch/search?nation=eng&sort=C&nationCode=6&ParaWordNo=&blockCount=${amount}&mainSearchWord=${q}`;
     const promise = new Promise((resolve, reject) => {
-      request(options, (error, response, body) => {
-        if (!error && response.statusCode === 200) resolve(body);
+      request(encodeURI(this.url), (error, response, body) => {
+        if (!error && response.statusCode === 200) resolve(this.parseResult(body));
         else reject(error);
       });
     });
     return promise;
-  }
-
-  parseExampleResult(r) {
-    this.exampleEntries = [];
-    et.parse(r).findall('item').forEach((item) => {
-      const entry = { word: item.find('word').text };
-      entry.example = item.find('example').text.trim();
-      this.exampleEntries.push(entry);
-    });
-    return this.exampleEntries;
-  }
-
-  parseWordResult(r) {
-    this.dicEntries = [];
-    et.parse(r).findall('item').forEach((item) => {
-      const entry = { word: item.find('word').text };
-
-      const pos = item.find('pos').text;
-      entry.pos = pos;
-
-      entry.code = item.find('target_code').text;
-
-      const senses = item.findall('sense');
-      entry.entryDefinitions = [];
-      senses.forEach((sense) => {
-        const def = {};
-        const definition = sense.find('definition');
-        const translation = sense.find('translation');
-
-        if (definition) def.definitionKorean = definition.text;
-        if (translation) def.definitionTrans = translation.find('trans_dfn').text;
-        entry.entryDefinitions.push(def);
-      });
-      this.dicEntries.push(entry);
-    });
-    return this.dicEntries;
   }
 };
