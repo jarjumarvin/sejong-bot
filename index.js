@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const DiscordUtil = require('./common/discordutil');
 const {
-  prefix, enabledCommands, status, devIds, llkId, enableSejongReply,
+  prefix, enabledCommands, status, devIds, llkId, devServerId, enableSejongReply,
 } = require('./config.json');
 const { discordToken } = require('./apiconfig.json');
 
@@ -72,10 +72,11 @@ client.on('message', (message) => {
         try {
           if (message.content.toLowerCase().includes('sejong') || message.content.toLowerCase().includes('세종')) {
             if (message.channel.type === 'text' && message.guild.id === llkId) {
-              message.react(message.guild.emojis.get('296691477822701569'));
+              message.react('296691477822701569');
             }
           }
         } catch (error) {
+          console.log(error)
           return;
         }
       }
