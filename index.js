@@ -15,17 +15,17 @@ const rawEventTypes = {
 client.on('raw', async (event) => {
   if (!rawEventTypes[event.t]) return;
   const { d: data } = event;
-  const user = client.users.get(data.user_id);
-  const channel = client.channels.get(data.channel_id) || await user.createDM();
+  const user = client.users.cache.get(data.user_id);
+  const channel = client.channels.cache.get(data.channel_id) || await user.createDM();
 
-  if (channel.messages.has(data.message_id)) return;
+  if (channel.messages.cache.some(message => message.id === data.message_id)) return;
 
   const message = await channel.fetchMessage(data.message_id);
   const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
 
   let reaction = message.reactions.get(emojiKey);
   if (!reaction) {
-    const emoji = new Discord.Emoji(client.guilds.get(data.guild_id), data.emoji);
+    const emoji = new Discord.Emoji(client.guilds.cache.get(data.guild_id), data.emoji);
     reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
   }
   client.emit(rawEventTypes[event.t], reaction, user);
@@ -72,7 +72,7 @@ client.on('message', (message) => {
         try {
           if (message.content.toLowerCase().includes('sejong') || message.content.toLowerCase().includes('세종')) {
             if (message.channel.type === 'text' && message.guild.id === llkId) {
-              message.react(message.guild.emojis.get('296691477822701569'));
+              message.react(message.guild.cache.emojis.get('296691477822701569'));
             }
           }
         } catch (error) {
