@@ -3,13 +3,14 @@ const Promise = require('promise');
 const { papagoUrl, papagoClientId, papagoClientSecret } = require('../apiconfig.json');
 
 module.exports = class Papago {
-  translate(text, source, target) {
+  translate(text, source, target, honorific) {
     this.options = {
       url: papagoUrl,
       form: {
-        source,
-        target,
-        text,
+        'source': source,
+        'target': target,
+        'text': text,
+        'honorific': true,
       },
       headers: {
         'X-Naver-Client-Id': papagoClientId,
