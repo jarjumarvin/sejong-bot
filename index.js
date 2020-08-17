@@ -28,7 +28,12 @@ client.on('raw', async (event) => {
     const emoji = new Discord.Emoji(client.guilds.get(data.guild_id), data.emoji);
     reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
   }
-  client.emit(rawEventTypes[event.t], reaction, user);
+  try {
+    // TODO: REMOVE THIS
+    client.emit(rawEventTypes[event.t], reaction, user);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
