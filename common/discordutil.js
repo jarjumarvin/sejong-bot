@@ -22,7 +22,7 @@ module.exports = {
       }
     }
 
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor(0xDF2B40)
       .setAuthor(`${message.author.username} said:`, message.author.avatarURL ? message.author.avatarURL : undefined)
       .setDescription(`${message.content}${image ? `\r\n\r\n${image}` : ''}`)
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   createBasicEmbed(name) {
-    return new Discord.RichEmbed()
+    return new Discord.MessageEmbed()
       .setColor(accentColor)
       .setAuthor(name || 'Sejong', 'https://i.imgur.com/v95B0db.jpg');
   },

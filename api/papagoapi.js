@@ -1,6 +1,9 @@
 const request = require('request');
+const fs = require('fs');
 const Promise = require('promise');
 const { papagoUrl, papagoClientId, papagoClientSecret } = require('../apiconfig.json');
+
+console.log(papagoClientId);
 
 module.exports = class Papago {
   translate(text, source, target, honorific) {

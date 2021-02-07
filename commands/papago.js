@@ -43,15 +43,21 @@ module.exports = {
 
     const q = args.join(' ');
     const p = new PapagoApi();
+    console.log("Papago rules!");
     const promise = p.translate(q, source, target);
 
+    console.log("hey, do you need me!!");
+
     function send(result) {
+      console.log(result);
       message.channel.send(DiscordUtil.createTranslationResultEmbed(result));
     }
 
     promise.then((result) => {
+      console.log("hey, i'm here!!");
       send(result);
     }, (err) => {
+      console.log("hey, i'm not working!!");
       throw new Error(err);
     });
   },
