@@ -15,8 +15,8 @@ const rawEventTypes = {
 client.on('raw', async (event) => {
   if (!rawEventTypes[event.t]) return;
   const { d: data } = event;
-  const user = client.users.get(data.user_id);
-  const channel = client.channels.get(data.channel_id) || await user.createDM();
+  const user = client.users.cache.get(data.user_id);
+  const channel = client.channels.cache.get(data.channel_id) || await user.createDM();
 
   if (channel.messages.some(message => message.id === data.message_id)) return;
 
