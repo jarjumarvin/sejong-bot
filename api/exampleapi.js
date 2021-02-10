@@ -1,7 +1,10 @@
 const querystring = require('querystring');
 const request = require('request');
 const et = require('elementtree');
-const { krDictUrl, krDictToken } = require('../apiconfig.json');
+const {
+  krdict_url: krDictUrl,
+  krdict_token: krDictToken
+} = require('../apiconfig.json');
 
 module.exports = class ExampleSentenceAPI {
   constructor() {

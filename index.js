@@ -3,7 +3,7 @@ const DiscordUtil = require('./common/discordutil');
 const {
   prefix, enabledCommands, status, devIds, llkId, devServerId, enableSejongReply,
 } = require('./config.json');
-const { discordToken } = require('./apiconfig.json');
+const { discord_token: discordToken } = require('./apiconfig.json');
 
 const client = new Discord.Client();
 
@@ -15,17 +15,17 @@ const rawEventTypes = {
 client.on('raw', async (event) => {
   if (!rawEventTypes[event.t]) return;
   const { d: data } = event;
-  const user = client.users.get(data.user_id);
-  const channel = client.channels.get(data.channel_id) || await user.createDM();
+  const user = client.users.cache.get(data.user_id);
+  const channel = client.channels.cache.get(data.channel_id) || await user.createDM();
 
-  if (channel.messages.some(message => message.id === data.message_id)) return;
+  if (channel.messages.cache.some(message => message.id === data.message_id)) return;
 
-  const message = await channel.fetchMessage(data.message_id);
+  const message = await channel.messages.fetch(data.message_id);
   const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
 
-  let reaction = message.reactions.get(emojiKey);
+  let reaction = message.reactions.cache.get(emojiKey);
   if (!reaction) {
-    const emoji = new Discord.Emoji(client.guilds.get(data.guild_id), data.emoji);
+    const emoji = new Discord.Emoji(client.guilds.cache.get(data.guild_id), data.emoji);
     reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
   }
   try {
@@ -38,8 +38,8 @@ client.on('raw', async (event) => {
 
 client.on('messageReactionAdd', (reaction, user) => {
   if (reaction.message.author.id === client.user.id && reaction.emoji.name === '❌' && reaction.message.channel.type !== 'text') {
-    if (reaction.message.reactions.find(rawReaction => rawReaction.me)
-    && user.id !== client.user.id) {
+    if (reaction.message.reactions.resolve(rawReaction => rawReaction.me)
+      && user.id !== client.user.id) {
       reaction.message.delete();
     }
   }
@@ -67,7 +67,7 @@ enabledCommands.forEach((name) => {
 const cooldowns = new Discord.Collection();
 client.on('message', (message) => {
   if (message.mentions.users.array().length === 1 && message.mentions.users.has(client.user.id)) {
-    message.reply(`type **${prefix}help** to see my commands.`);
+    message.reply(`type **\\${prefix}help** to see my commands.`);
     return;
   }
 
@@ -92,7 +92,7 @@ client.on('message', (message) => {
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
   const command = client.commands.get(commandName)
-               || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) return;
 

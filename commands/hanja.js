@@ -9,7 +9,7 @@ module.exports = {
   longdescription: 'Searches the hanja database for meanings of hanjas and related words that occur in the provided argument.\r\n Use the reactions below the message to browse pages or bookmark the result to DMs.',
   aliases: ['h'],
   args: true,
-  usage: `${prefix}hanja 韓國`,
+  usage: `\\${prefix}hanja 韓國`,
   cooldown: 5,
   execute(message, args) {
     const isDM = message.channel.type !== 'text';

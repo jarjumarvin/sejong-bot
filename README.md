@@ -37,7 +37,7 @@ Uses Papago's Neural Machine Translation to translate a given text between two g
 
 ### Running:
 - Generate a [Discord token](https://discordapp.com/developers/applications/), a [한국어기초사전 OPEN API](https://krdict.korean.go.kr/openApi/openApiInfo) token, and a [Papago NMT API](https://developers.naver.com/docs/nmt/reference/) client ID and secret.
-- Create file `apiconfig.json` in the root directy and fill in the secrets from above. These values are used to fetch data for the various commands of Sejong-bot.
+- Create file `apiconfig.json` in the root directory and fill in the secrets from above. These values are used to fetch data for the various commands of Sejong-bot.
 ```json
 {
     "discord_token": "",
