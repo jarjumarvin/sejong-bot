@@ -22,7 +22,7 @@ module.exports = {
       }
     }
 
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor(0xDF2B40)
       .setAuthor(`${message.author.username} said:`, message.author.avatarURL ? message.author.avatarURL : undefined)
       .setDescription(`${message.content}${image ? `\r\n\r\n${image}` : ''}`)
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   createBasicEmbed(name) {
-    return new Discord.RichEmbed()
+    return new Discord.MessageEmbed()
       .setColor(accentColor)
       .setAuthor(name || 'Sejong', 'https://i.imgur.com/v95B0db.jpg');
   },
@@ -161,7 +161,7 @@ module.exports = {
   },
 
   createHelpEmbed(commands) {
-    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
+    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **\\${prefix}help <command>** to see information about a specific command.`);
     commands.forEach((c) => {
       if (c.name === 'help') return;
       if (c.devOnly) return;
@@ -173,14 +173,14 @@ module.exports = {
       } = c;
 
       const descriptionAndUsage = description + (usage ? `\r\n __(Ex. ${usage})__` : '');
-      const title = `${prefix}${name} ${aliases ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
+      const title = `\\${prefix}${name} ${aliases ? `(short: \\${aliases.map(e => prefix + e).join(', ')})` : ''}`;
       embed.addField(title, descriptionAndUsage);
     });
     return embed;
   },
 
   createDetailHelpEmbed(command) {
-    const embed = this.createBasicEmbed().setDescription(`**${prefix}${command.name} ${command.aliases ? `(short: ${command.aliases.map(e => prefix + e).join(', ')})` : ''}**\r\n${command.longdescription ? command.longdescription : command.description}`);
+    const embed = this.createBasicEmbed().setDescription(`**\\${prefix}${command.name} ${command.aliases ? `(short: \\${command.aliases.map(e => prefix + e).join(', ')})` : ''}**\r\n${command.longdescription ? command.longdescription : command.description}`);
     if (command.usage) {
       embed.addField('Usage Example', command.usage ? command.usage : 'None', true);
     }
