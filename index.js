@@ -27,7 +27,9 @@ client.on('raw', async (event) => {
   if (!reaction) {
     try {
       const emoji = new Discord.Emoji(client.guilds.cache.get(data.guild_id), data.emoji);
-      reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
+      reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id).catch(error => {
+        console.error(error)
+      });
     } catch (error) {
       console.error(error)
     }
