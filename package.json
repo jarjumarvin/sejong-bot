@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js;"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "detect-libc": "^1.0.3",
-    "discord.js": "^12.1.1",
+    "discord.js": "^12.5.1",
     "elementtree": "^0.1.7",
     "krdict-api": "0.0.4",
     "promise": "^8.1.0",

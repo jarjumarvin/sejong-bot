@@ -33,23 +33,25 @@ module.exports = class Paginator {
         .then(backReact => backReact.message.react(this.next))
         .then((backReact) => {
           this.message = backReact.message;
+
           const emojis = [this.back, this.next];
+
           if (this.bookmark) {
             this.message.react('🔖');
           }
+
           const reactionFilter = (reaction, user) => {
-            if (reaction.me && emojis.includes(reaction.emoji.name)) {
-              if (user.id === this.author.id && user.id !== this.message.author.id) {
-                return true;
-              }
+            if (!reaction.me && emojis.includes(reaction.emoji.name) && user.id === this.author.id) {
+              return true;
             }
             return false;
           };
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
-          this.collector.on('collect', (reaction) => {
+
+          this.collector.on('collect', (reaction, user) => {
             if (this.hasPermission) {
-              reaction.remove(this.author);
+              reaction.users.remove(user)
             }
             switch (reaction.emoji.toString()) {
               case this.back:
@@ -81,23 +83,25 @@ module.exports = class Paginator {
         .then(next => next.message.react('↘'))
         .then((last) => {
           this.message = last.message;
+
           const emojis = ['↙', this.back, this.next, '↘'];
+
           if (this.bookmark) {
             this.message.react('🔖');
           }
+
           const reactionFilter = (reaction, user) => {
-            if (reaction.me && emojis.includes(reaction.emoji.name)) {
-              if (user.id === this.author.id && user.id !== this.message.author.id) {
-                return true;
-              }
+            if (!reaction.me && emojis.includes(reaction.emoji.name) && user.id === this.author.id) {
+              return true;
             }
             return false;
           };
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
-          this.collector.on('collect', (reaction) => {
+
+          this.collector.on('collect', (reaction, user) => {
             if (this.hasPermission) {
-              reaction.remove(this.author);
+              reaction.users.remove(user)
             }
             switch (reaction.emoji.toString()) {
               case this.first:
