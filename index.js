@@ -74,15 +74,13 @@ client.on('message', (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) {
     if (!message.author.bot) {
       if (enableSejongReply) {
-        try {
           if (message.content.toLowerCase().includes('sejong') || message.content.toLowerCase().includes('세종')) {
             if (message.channel.type === 'text' && message.guild.id === llkId) {
-              message.react('296691477822701569');
+              message.react('296691477822701569').catch(error => {
+                console.log(error)
+                return;
+              });
             }
-          }
-        } catch (error) {
-          console.log(error)
-          return;
         }
       }
     }
