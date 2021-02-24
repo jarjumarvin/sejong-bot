@@ -28,17 +28,17 @@ client.on('raw', async (event) => {
     try {
       const emoji = new Discord.Emoji(client.guilds.cache.get(data.guild_id), data.emoji);
       reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id).catch(error => {
-        console.error(error)
+        //console.error(error)
       });
     } catch (error) {
-      console.error(error)
+      //console.error(error)
     }
   }
   try {
     // TODO: REMOVE THIS
     client.emit(rawEventTypes[event.t], reaction, user);
   } catch (error) {
-    console.error(error);
+    //console.error(error);
   }
 });
 
@@ -82,8 +82,8 @@ client.on('message', (message) => {
       if (enableSejongReply) {
           if (message.content.toLowerCase().includes('sejong') || message.content.toLowerCase().includes('세종')) {
             if (message.channel.type === 'text' && message.guild.id === llkId) {
-              message.react('296691477822701569').catch(error => {
-                console.log(error)
+              message.react('814246429936582706').catch(error => {
+                //console.log(error)
                 return;
               });
             }
