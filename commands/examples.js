@@ -7,7 +7,7 @@ module.exports = {
   description: 'Search the dictionary for example sentences.',
   longdescription: 'Searches the dictionary for example sentences including the Korean word provided.\r\n\r\nResults come from the National Institute of Korean Language\'s Korean-English Learners\' Dictionary.\r\n\r\nUse the book reaction to bookmark the message to DMs.',
   aliases: ['e', 'ex'],
-  usage: `\\${prefix}examples 나무`,
+  usage: `${prefix}examples 나무`,
   args: true,
   cooldown: 5,
   execute(message, args) {
