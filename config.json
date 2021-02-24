@@ -1,10 +1,10 @@
 {
-    "prefix": "~",
+    "prefix": "`",
     "accentColor": "#C27C0E",
     "avatar": "https://i.imgur.com/v95B0db.jpg",
     "status": ["WATCHING", "@ me for hangoolies help!"],
     "enabledCommands": ["word", "hanja", "examples", "help", "msg"],
     "devIds": ["104905437614223360"],
-    "llkId": "234492134806257665",
+    "llkId": "529232226546745344",
     "enableSejongReply": true
 }
