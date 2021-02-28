@@ -36,7 +36,9 @@ client.on('raw', async (event) => {
   }
   try {
     // TODO: REMOVE THIS
-    client.emit(rawEventTypes[event.t], reaction, user);
+    client.emit(rawEventTypes[event.t], reaction, user).catch(error => {
+      // console.error(error)
+    });
   } catch (error) {
     //console.error(error);
   }
