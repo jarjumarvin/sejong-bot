@@ -5,6 +5,8 @@ Sejong-bot is a Korean language bot targeted towards Korean learners and enthusi
 
 Use the following [invite link](https://discord.com/api/oauth2/authorize?client_id=529231054909865985&permissions=74752&scope=bot)!
 
+A 'support' discord server can be found [here](https://discord.gg/EhGjg2drSQ). Feel free to ping me and ask questions.
+
 ## Data Sources
 - [Dictionary](https://krdict.korean.go.kr/openApi/openApiInfo)
     - Example sentences
