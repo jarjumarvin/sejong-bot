@@ -48,4 +48,20 @@ Uses Papago's Neural Machine Translation to translate a given text between two g
     "papago_client_secret": ""
 }
 ```
+
+- Create file `config.json` in the root directory and fill accordingly:
+```json
+{
+    "prefix": "`",
+    "accentColor": "#C27C0E",
+    "avatar": "https://i.imgur.com/v95B0db.jpg",
+    "status": ["WATCHING", "@ me for hangoolies help!"],
+    "enabledCommands": ["word", "hanja", "examples", "help", "msg"],
+    "devIds": ["", ""],
+    "llkId": "",
+    "enableSejongReply": true
+}
+```
+where devIds are user IDs of people you want to be able to use the message command, and llkId is the server on which the bot reacts with the sejbless emote automatically.
+
 - Run `npm install` and once all packages have been installed, start the bot using `npm start`.
