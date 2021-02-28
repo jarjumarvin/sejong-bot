@@ -1,6 +1,10 @@
 # Who is Sejong-bot?
 Sejong-bot is a Korean language bot targeted towards Korean learners and enthusiats. It supports features such as word definitions in Korean and English, example sentences and neural machine translation. Users can also bookmark past searches to their DM's.
 
+# How do I invite Sejong-bot to my own server?
+
+Use the following [invite link](https://discord.com/api/oauth2/authorize?client_id=529231054909865985&permissions=74752&scope=bot)!
+
 ## Data Sources
 - [Dictionary](https://krdict.korean.go.kr/openApi/openApiInfo)
     - Example sentences
