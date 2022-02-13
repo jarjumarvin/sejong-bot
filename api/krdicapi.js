@@ -1,10 +1,10 @@
-const request = require('request');
+const got = require('got');
 const cheerio = require('cheerio');
 
 module.exports = class KrDicApi {
   parseResult(html, maxSenses) {
     const $ = cheerio.load(html, { normalizeWhitespace: true });
-    this.entries = $('.search_list').children();
+    this.entries = $('.search_result').children();
     const count = this.entries.length;
     const dicEntries = [];
     let i;
@@ -14,18 +14,14 @@ module.exports = class KrDicApi {
       const entry = $(this.entries).eq(i).children();
       const title = entry.eq(0);
 
-      dicEntry.word = $(title).find('a').eq(0).text()
+      dicEntry.word = $(title).remove('sup').find('a').eq(0).text()
         .replace(/\s+/g, ' ')
+        .replace(/[0-9]/g, '')
         .trim();
       const h = title.text().match(/\(.*\)/);
       const p = title.text().match(/\[(.*?)\]/);
 
-      let s;
-
-      if ($(title).find('.score_3').length > 0) s = 3;
-      else if ($(title).find('.score_2').length > 0) s = 2;
-      else if ($(title).find('.score_1').length > 0) s = 1;
-      else s = 0;
+      let s = $(entry).find('.star').children().length; 
 
       dicEntry.stars = s;
 
@@ -37,33 +33,29 @@ module.exports = class KrDicApi {
 
       let pronunciation;
       if (p && p[1]) {
-        pronunciation = p[1].trim();
+        pronunciation = p[1].replace("듣기", "").trim();
       }
 
       dicEntry.pronunciation = pronunciation;
-  
-      dicEntry.wordType = $(title).find('em').eq(0).text()
-        .replace(/\s+/g, ' ')
-        .trim();
 
-      dicEntry.wordTypeTranslated = $(title).find('em').eq(1).text()
+      let wordTypes = $(title).find('.word_att_type1').text()
+        .replace('「',"")
+        .replace('」',"")
         .replace(/\s+/g, ' ')
-        .trim();
+        .trim()
+        .split(' ');
 
-      const senses = $(entry).eq(1).children();
+      dicEntry.wordType = wordTypes[0];
+      dicEntry.wordTypeTranslated = wordTypes[1];
+
+      const senses = $(this.entries).eq(i).find('dd')
       const entrySenses = [];
       let j;
-      for (j = 0; j < senses.length; j += 1) {
-        if(maxSenses && j > maxSenses) break;
-        const current = senses.eq(j).children();
+      for(j = 0; j < senses.length; j += 3) {
         const sense = {};
-        sense.meaning = current.eq(0).text()
-          .replace(/\s+/g, ' ')
-          .replace(/\d*\.\d*/, '')
-          .trim();
-
-        sense.definition = current.eq(1).text().replace(/\s+/g, ' ').trim();
-        sense.translation = current.eq(2).text().replace(/\s+/g, ' ').trim();
+        sense.meaning = senses.eq(j).text().trim().replace(/\d+/g, '').replace(/\s+/g, ' ').replace('. ', '').trim();
+        sense.definition = senses.eq(j + 1).text().replace(/\s+/g, ' ').trim();
+        sense.translation = senses.eq(j + 2).text().replace(/\s+/g, ' ').trim();  
         entrySenses.push(sense);
       }
       dicEntry.senses = entrySenses;
@@ -75,13 +67,23 @@ module.exports = class KrDicApi {
   }
 
   searchWords(q, amount) {
-    this.url = `https://krdict.korean.go.kr/eng/dicSearch/search?nation=eng&sort=C&nationCode=6&ParaWordNo=&blockCount=${amount}&mainSearchWord=${q}`;
-    const promise = new Promise((resolve, reject) => {
-      request(encodeURI(this.url), (error, response, body) => {
-        if (!error && response.statusCode === 200) resolve(this.parseResult(body));
-        else reject(error);
-      });
-    });
+    this.url = `https://krdict.korean.go.kr/eng/dicSearch/search?nation=eng&nationCode=6&ParaWordNo=&mainSearchWord=${q}&blockCount=${amount}`;
+    const promise = new Promise((resolve, reject) =>(async () => {
+      try {
+        const options = {
+          https: {
+            rejectUnauthorized: false
+          }
+        };
+        
+        const response = await got(this.url, options);
+        resolve(this.parseResult(response.body));
+        //=> '<!doctype html> ...'
+      } catch (error) {
+        console.log(error);
+        //=> 'Internal server error ...'
+      }
+    })());
     return promise;
   }
 };
