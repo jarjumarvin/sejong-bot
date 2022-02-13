@@ -1,5 +1,5 @@
 const querystring = require('querystring');
-const request = require('request');
+const got = require('got');
 const et = require('elementtree');
 const { krDictUrl, krDictToken } = require('../apiconfig.json');
 
@@ -25,14 +25,23 @@ module.exports = class ExampleSentenceAPI {
         'content-type': 'application/xml',
         Accept: 'application/xml',
       },
+      https: {
+        rejectUnauthorized: false
+      },
     };
 
-    return new Promise((resolve, reject) => {
-      request(options, (error, response, body) => {
-        if (!error && response.statusCode === 200) resolve(body);
-        else reject(error);
-      });
-    });
+
+    const promise = new Promise((resolve, reject) =>(async () => {
+      try {
+        const response = await got(options);
+        resolve(response.body);
+        //=> '<!doctype html> ...'
+      } catch (error) {
+        console.log(error);
+        //=> 'Internal server error ...'
+      }
+    })());
+    return promise;
   }
 
   parseExampleResult(r) {

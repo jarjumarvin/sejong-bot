@@ -22,10 +22,20 @@ module.exports = {
       }
     }
 
+    if(message.content.length >= 2048){
+      splittedText = this.splitText(message.content);
+      this.createBookMarkMessage(message, splittedText[0], image, user);
+      this.createBookMarkMessage(message, splittedText[1], image, user);
+    }
+    else {
+      this.createBookMarkMessage(message, message.content, image, user);
+    }
+  },
+  createBookMarkMessage(message, text, image, user){
     const embed = new Discord.MessageEmbed()
       .setColor(0xDF2B40)
       .setAuthor(`${message.author.username} said:`, message.author.avatarURL ? message.author.avatarURL : undefined)
-      .setDescription(`${message.content}${image ? `\r\n\r\n${image}` : ''}`)
+      .setDescription(`${text}${image ? `\r\n\r\n${image}` : ''} \r\n\r\n **Message link:** ${message.url}`)
       .setImage(image)
       .setTimestamp(message.editedTimestamp || message.createdTimestamp);
 
@@ -169,22 +179,39 @@ module.exports = {
         name,
         aliases,
         description,
-        usage,
+        examples,
       } = c;
 
-      const descriptionAndUsage = description + (usage ? `\r\n __(Ex. ${usage})__` : '');
+      const descriptionAndExamples = description + (examples ? `\r\n __(Ex. ${examples})__` : '');
       const title = `${prefix}${name} ${aliases ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
-      embed.addField(title, descriptionAndUsage);
+      embed.addField(title, descriptionAndExamples);
     });
     return embed;
   },
 
   createDetailHelpEmbed(command) {
-    const embed = this.createBasicEmbed().setDescription(`**${prefix}${command.name} ${command.aliases ? `(short: ${command.aliases.map(e => prefix + e).join(', ')})` : ''}**\r\n${command.longdescription ? command.longdescription : command.description}`);
-    if (command.usage) {
-      embed.addField('Usage Example', command.usage ? command.usage : 'None', true);
+    const embed = this.createBasicEmbed().setDescription(`**${prefix}${command.name} ${command.aliases ? `(short: ${command.aliases.map(e => prefix + e).join(', ')})` : ''}**\r\n${command.details ? command.details : command.description}`);
+    if (command.examples) {
+      embed.addField('Usage Example', command.examples ? command.examples : 'None', true);
     }
-    embed.addField('Cooldown', command.cooldown ? `${command.cooldown} seconds` : 'None', true);
     return embed;
   },
+
+  splitText(s) {
+    var middle = Math.floor(s.length / 2);
+    var before = s.lastIndexOf(' ', middle);
+    var after = s.indexOf(' ', middle + 1);
+
+    if (before == -1 || (after != -1 && middle - before >= after - middle)) {
+        middle = after;
+    } else {
+        middle = before;
+    }
+
+    var s1 = s.substr(0, middle);
+    var s2 = s.substr(middle + 1);
+
+    return [s1, s2]
+  }
+
 };
