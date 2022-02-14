@@ -171,7 +171,7 @@ module.exports = {
   },
 
   createHelpEmbed(commands) {
-    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
+    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997 ft BA code crew)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
     commands.forEach((c) => {
       if (c.name === 'help') return;
       if (c.devOnly) return;
