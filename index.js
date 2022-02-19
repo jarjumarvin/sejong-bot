@@ -23,8 +23,10 @@ client.registry
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.once('ready', () => {
-	console.log(`Bang PD is online!`);
-  client.user.setActivity('BE', { type: 'LISTENING' });
+  client.user.setActivity(status[1], { type: status[0] });
+  console.log('(-----------------------SEJONG-----------------------)');
+  console.log(`(----Logged in as ${client.user.username} using prefix ${prefix}`);
+  console.log('(----------------------------------------------------)');
 
 });
 
