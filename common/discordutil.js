@@ -22,8 +22,6 @@ module.exports = {
       }
     }
 
-<<<<<<< HEAD
-=======
     if(message.content.length >= 2048){
       splittedText = this.splitText(message.content);
       this.createBookMarkMessage(message, splittedText[0], image, user);
@@ -34,7 +32,6 @@ module.exports = {
     }
   },
   createBookMarkMessage(message, text, image, user){
->>>>>>> 742dd651f5e2cf47efa5925811156aee3c36bc51
     const embed = new Discord.MessageEmbed()
       .setColor(0xDF2B40)
       .setAuthor(`${message.author.username} said:`, message.author.avatarURL ? message.author.avatarURL : undefined)
