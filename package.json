@@ -25,11 +25,8 @@
     "cheerio": "^1.0.0-rc.3",
     "detect-libc": "^1.0.3",
     "discord.js": "^12.5.1",
-<<<<<<< HEAD
-=======
     "discord.js-commando": "^0.12.2",
     "dotenv": "^8.2.0",
->>>>>>> 742dd651f5e2cf47efa5925811156aee3c36bc51
     "elementtree": "^0.1.7",
     "krdict-api": "0.0.4",
     "promise": "^8.1.0",
