@@ -41,17 +41,18 @@ module.exports = class Paginator {
           }
 
           const reactionFilter = (reaction, user) => {
-            if (!reaction.me && emojis.includes(reaction.emoji.name) && user.id === this.author.id) {
-              return true;
+            if (!reaction.me && emojis.includes(reaction.emoji.name)) {
+              if (user.id === this.author.id && user.id !== this.message.author.id) {
+                return true;
+              }
             }
             return false;
           };
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
-
           this.collector.on('collect', (reaction, user) => {
-            if (this.hasPermission) {
-              reaction.users.remove(user)
+            if (!this.hasPermission && this.message.channel.type != "dm") {
+              reaction.remove(this.author);
             }
             switch (reaction.emoji.toString()) {
               case this.back:
@@ -91,17 +92,18 @@ module.exports = class Paginator {
           }
 
           const reactionFilter = (reaction, user) => {
-            if (!reaction.me && emojis.includes(reaction.emoji.name) && user.id === this.author.id) {
-              return true;
+            if (!reaction.me && emojis.includes(reaction.emoji.name)) {
+              if (user.id === this.author.id && user.id !== this.message.author.id) {
+                return true;
+              }
             }
             return false;
           };
 
           this.collector = this.message.createReactionCollector(reactionFilter, { time: 300000 });
-
-          this.collector.on('collect', (reaction, user) => {
-            if (this.hasPermission) {
-              reaction.users.remove(user)
+          this.collector.on('collect', (reaction) => {
+            if (!this.hasPermission && this.message.channel.type != "dm") {
+              reaction.remove(this.author);
             }
             switch (reaction.emoji.toString()) {
               case this.first:

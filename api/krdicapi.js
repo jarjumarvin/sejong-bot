@@ -1,4 +1,4 @@
-const request = require('request');
+const got = require('got');
 const cheerio = require('cheerio');
 
 module.exports = class KrDicApi {
@@ -13,17 +13,17 @@ module.exports = class KrDicApi {
 
       const title = $(this.entries).eq(i).children().eq(0);
 
-      const senses = $(this.entries).eq(i).find('dd')
-
       dicEntry.word = $(title).remove('sup').find('a').eq(0).text()
-        .replace(/[0-9]/g, '')
         .replace(/\s+/g, ' ')
+        .replace(/[0-9]/g, '')
         .trim();
 
       const h = title.text().match(/\(.*\)/);
       const p = title.text().match(/\[(.*?)\]/);
 
-      dicEntry.stars = $(title).find('.star').eq(0).children().length;
+      let s = $(entry).find('.star').children().length; 
+
+      dicEntry.stars = s;
 
       let hanja;
       if (h) {
@@ -37,29 +37,25 @@ module.exports = class KrDicApi {
       }
 
       dicEntry.pronunciation = pronunciation;
-  
-      let word_type;
-      word_type = $(title).find('.word_att_type1').eq(0).text()
-        .replace("「", "")
-        .replace("」", "")
+
+      let wordTypes = $(title).find('.word_att_type1').text()
+        .replace('「',"")
+        .replace('」',"")
         .replace(/\s+/g, ' ')
         .trim()
-        .split(" ")
+        .split(' ');
 
-      dicEntry.wordType = word_type[0]
-      dicEntry.wordTypeTranslated = word_type[1]
+      dicEntry.wordType = wordTypes[0];
+      dicEntry.wordTypeTranslated = wordTypes[1];
 
-
+      const senses = $(this.entries).eq(i).find('dd')
       const entrySenses = [];
       let j;
-
       for(j = 0; j < senses.length; j += 3) {
         const sense = {};
-
-        sense.meaning = senses.eq(j).text().trim().replace(/^[0-9]\./, '').replace(/\s+/g, ' ').trim()
-        sense.definition = senses.eq(j + 1).text().replace(/\s+/g, ' ').trim()
-        sense.translation = senses.eq(j + 2).text().replace(/\s+/g, ' ').trim()
-
+        sense.meaning = senses.eq(j).text().trim().replace(/\d+/g, '').replace(/\s+/g, ' ').replace('. ', '').trim();
+        sense.definition = senses.eq(j + 1).text().replace(/\s+/g, ' ').trim();
+        sense.translation = senses.eq(j + 2).text().replace(/\s+/g, ' ').trim();  
         entrySenses.push(sense);
       }
       dicEntry.senses = entrySenses;
@@ -73,12 +69,22 @@ module.exports = class KrDicApi {
 
   searchWords(q, amount) {
     this.url = `https://krdict.korean.go.kr/eng/dicSearch/search?nation=eng&nationCode=6&ParaWordNo=&mainSearchWord=${q}&blockCount=${amount}`;
-    const promise = new Promise((resolve, reject) => {
-      request(encodeURI(this.url), (error, response, body) => {
-        if (!error && response.statusCode === 200) resolve(this.parseResult(body));
-        else reject(error);
-      });
-    });
+    const promise = new Promise((resolve, reject) =>(async () => {
+      try {
+        const options = {
+          https: {
+            rejectUnauthorized: false
+          }
+        };
+        
+        const response = await got(this.url, options);
+        resolve(this.parseResult(response.body));
+        //=> '<!doctype html> ...'
+      } catch (error) {
+        console.log(error);
+        //=> 'Internal server error ...'
+      }
+    })());
     return promise;
   }
 };
