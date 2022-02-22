@@ -36,6 +36,8 @@ Returns a list of Korean example sentences including a word given. Users can boo
 
 Uses Papago's Neural Machine Translation to translate a given text between two given languages. Translates from Korean to English by default but users can specify source and target language using `~papago en>ko`. Available language codes can be seen using `~help papago`.
 
+THIS COMMAND IS CURRENTLY DISABLED
+
 ## Installation
 
 ### Dependencies
@@ -62,12 +64,7 @@ Uses Papago's Neural Machine Translation to translate a given text between two g
     "accentColor": "#C27C0E",
     "avatar": "https://i.imgur.com/v95B0db.jpg",
     "status": ["WATCHING", "@ me for hangoolies help!"],
-    "enabledCommands": ["word", "hanja", "examples", "help", "msg"],
-    "devIds": ["", ""],
-    "llkId": "",
-    "enableSejongReply": true
 }
 ```
-where devIds are user IDs of people you want to be able to use the message command, and llkId is the server on which the bot reacts with the sejbless emote automatically.
 
 - Run `npm install` and once all packages have been installed, start the bot using `npm start`.

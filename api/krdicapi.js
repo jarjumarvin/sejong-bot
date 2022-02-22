@@ -21,7 +21,7 @@ module.exports = class KrDicApi {
       const h = title.text().match(/\(.*\)/);
       const p = title.text().match(/\[(.*?)\]/);
 
-      let s = $(entry).find('.star').children().length; 
+      let s = $(dicEntry).find('.star').children().length; 
 
       dicEntry.stars = s;
 

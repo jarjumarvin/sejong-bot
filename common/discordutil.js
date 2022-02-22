@@ -59,7 +59,7 @@ module.exports = {
   createWordSearchEmbed(language, query, username, isDM, searchResults) {
     const embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
     if (searchResults.length === 0) {
-      embed.addField('Error', 'No results have been found');
+      embed.addField('Oops.', 'No results have been found');
     } else {
       this.setEmbedFooter(embed, `${username} can toggle languages. ${!isDM ? 'Anyone can bookmark this message.' : ''}`);
       searchResults.forEach((entry) => {
@@ -98,7 +98,7 @@ module.exports = {
     const isEmpty = results.similarwords.length === 0 && results.hanjas.length === 0;
     if (isEmpty) {
       const embed = this.createBasicEmbed().setDescription(`Search results for: **${query}**`);
-      embed.addField('Error', 'No results have been found');
+      embed.addField('Oops.', 'No results have been found');
       pages.push(embed);
     } else {
       const pageLength = 10;
@@ -145,7 +145,7 @@ module.exports = {
   createExampleResultEmbed(language, query, username, isDM, searchResults) {
     const embed = this.createBasicEmbed().setDescription(`Example Sentences for for: **${query}**`);
     if (searchResults.length === 0) {
-      embed.addField('Error', 'No results have been found');
+      embed.addField('Oops.', 'No results have been found');
     } else {
       let s = `Example sentences for **${query}**:\r\n\r\n`;
       let i;
@@ -164,7 +164,7 @@ module.exports = {
     const embed = this.createBasicEmbed();
     this.setEmbedFooter(embed, 'Powered by Papago');
     if (!result) {
-      embed.addField('Error', 'No results have been found');
+      embed.addField('Oops.', 'No results have been found');
     } else {
       embed.addField('Result', result.text);
       embed.addField('Original Language', langs[result.source], true);

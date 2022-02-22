@@ -29,6 +29,9 @@ module.exports = class DictionaryCommand extends Command {
     const q = word.word;
     const api = new ExampleSentenceAPI();
     const isDM = message.channel.type !== 'text';
+
+    console.log(`${new Date().toLocaleString()} - ${message.author.username} - examples - ${q}`);
+
     const promise = api.searchExamples(q, message);
 
     function send(dicEntries, answerMessage) {

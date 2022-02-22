@@ -8,10 +8,12 @@ const {
 	prefix, status
   } = require('./config.json');
 
-const { discord_token } = require('./apiconfig.json');
+const { discord_token, owner_id } = require('./apiconfig.json');
 
 const client = new CommandoClient({
 	commandPrefix: prefix,
+  owner: owner_id,
+  invite: 'https://discord.gg/bRCvFy9',
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
   intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGES']
 });
@@ -22,15 +24,27 @@ client.registry
 		['dictionary', 'Command Group for Dictionary functionalities'],
 	])
 	.registerDefaultGroups()
-	.registerDefaultCommands()
+	.registerDefaultCommands({
+    help: false,
+    prefix: false,
+    eval: false,
+    ping: false,
+    commandState: false,
+    unknownCommand: false
+  })
 	.registerCommandsIn(path.join(__dirname, 'commands'));
+
+// DISABLED COMMANDS
+ppg = client.registry.groups.get('dictionary').commands.get('papago')
+if (ppg) {
+  client.registry.unregisterCommand(ppg)
+}
 
 client.once('ready', () => {
   client.user.setActivity(status[1], { type: status[0] });
   console.log('(-----------------------SEJONG-----------------------)');
   console.log(`(----Logged in as ${client.user.username} using prefix ${prefix}`);
   console.log('(----------------------------------------------------)');
-
 });
 
 // CATCH RAW REACTION

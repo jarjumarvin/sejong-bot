@@ -25,7 +25,10 @@ module.exports = class DictionaryCommand extends Command {
     const isDM = message.channel.type !== 'text';
     const q = args.join(' ');
     const api = new KrDicApi();
-    const promise = api.searchWords(q, 5, 7);
+
+    console.log(`${new Date().toLocaleString()} - ${message.author.username} - word - ${args}`);
+
+    const promise = api.searchWords(q, 5);
 
     function send(result, answerMessage) {
       const enEmbed = DiscordUtil.createWordSearchEmbed('en', q, message.author.username, isDM, result);
