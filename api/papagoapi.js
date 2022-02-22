@@ -21,6 +21,7 @@ module.exports = class Papago {
       headers: {
         'X-Naver-Client-Id': papagoClientId,
         'X-Naver-Client-Secret': papagoClientSecret,
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
     };
 

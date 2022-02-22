@@ -27,6 +27,9 @@ module.exports = class DictionaryCommand extends Command {
     const args = [word.word];
     const isDM = message.channel.type !== 'text';
     const hanja = new Hanja();
+
+    console.log(`${new Date().toLocaleString()} - ${message.author.username} - hanja - ${args}`);
+
     const pendingEmbed = DiscordUtil.createPendingEmbed(message.author.username);
     message.channel.send(pendingEmbed).then((pendingMessage) => {
       hanja.searchWords(args).then((results) => {
