@@ -22,6 +22,7 @@ client.registry
 	.registerDefaultTypes()
 	.registerGroups([
 		['dictionary', 'Command Group for Dictionary functionalities'],
+		['owner', 'Command Group for Developer functionalities'],
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands({
