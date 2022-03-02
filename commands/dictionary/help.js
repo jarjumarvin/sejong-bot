@@ -16,11 +16,13 @@ module.exports = class DictionaryCommand extends Command {
 
   run(message, args) {
     const commands = message.client.registry.groups.get('dictionary').commands;
+    
+    const order = ['word', 'examples', 'hanja', 'invite', 'support']
   
     console.log(`${new Date().toLocaleString()} - ${message.author.username} - help`);
 
     if (!args) {
-      const helpEmbed = DiscordUtil.createHelpEmbed(commands);
+      const helpEmbed = DiscordUtil.createHelpEmbed(commands, order);
       message.channel.send(helpEmbed);
       return;
     } else {
@@ -33,7 +35,7 @@ module.exports = class DictionaryCommand extends Command {
 
     const name = args[0].toLowerCase();
     if (name === 'all') {
-      const helpEmbed = DiscordUtil.createHelpEmbed(commands);
+      const helpEmbed = DiscordUtil.createHelpEmbed(commands, order);
       message.channel.send(helpEmbed);
       return;
     } else {
