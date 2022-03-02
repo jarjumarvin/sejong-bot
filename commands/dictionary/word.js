@@ -26,7 +26,7 @@ module.exports = class DictionaryCommand extends Command {
     const q = args.join(' ');
     const api = new KrDicApi();
 
-    console.log(`${new Date().toLocaleString()} - ${message.author.username} - word - ${args}`);
+    console.log(`${message.author.username} - word - ${args}`);
 
     const promise = api.searchWords(q, 5);
 

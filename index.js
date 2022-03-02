@@ -59,13 +59,17 @@ client.on('raw', async (event) => {
   const user = client.users.cache.get(data.user_id);
   const channel = client.channels.cache.get(data.channel_id) || await user.createDM();
 
-  const message = await channel.messages.fetch(data.message_id);
-  const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
-
-  let reaction = message.reactions.cache;
-  if (!reaction) {
-    const emoji = new Discord.Emoji(client.guilds.get(data.guild_id), data.emoji);
-    reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
+  try {
+    const message = await channel.messages.fetch(data.message_id);
+    const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+  
+    let reaction = message.reactions.cache;
+    if (!reaction) {
+      const emoji = new Discord.Emoji(client.guilds.get(data.guild_id), data.emoji);
+      reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === client.user.id);
+    }
+  } catch (error) {
+    // ignore lol
   }
 });
 
@@ -76,7 +80,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		try {
 			await reaction.fetch();
 		} catch (error) {
-			console.error('Something went wrong when fetching the message: ', error);
+			// console.error('Something went wrong when fetching the message: ', error);
+
+      // we ignore this
+
 			// Return as `reaction.message.author` may be undefined/null
 			return;
 		}
@@ -93,9 +100,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
       if (reaction.message.embeds[0] && reaction.message.author.id === client.user.id) {
         const embed = reaction.message.embeds[0];
         user.send({ embed }).then(msg => msg.react('❌'));
-        console.log(`${datetime} - ${user.username} - result bookmark `);
+        console.log(`${user.username} - result bookmark `);
       } else {
-        console.log(`${datetime} - ${user.username} - message bookmark `);
+        console.log(`${user.username} - message bookmark `);
         DiscordUtil.bookmark(reaction.message, user);
       }
     }

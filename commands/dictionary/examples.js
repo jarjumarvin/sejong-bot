@@ -30,7 +30,7 @@ module.exports = class DictionaryCommand extends Command {
     const api = new ExampleSentenceAPI();
     const isDM = message.channel.type !== 'text';
 
-    console.log(`${new Date().toLocaleString()} - ${message.author.username} - examples - ${q}`);
+    console.log(`${message.author.username} - examples - ${q}`);
 
     const promise = api.searchExamples(q, message);
 
