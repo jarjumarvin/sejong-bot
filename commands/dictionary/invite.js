@@ -15,7 +15,7 @@ module.exports = class DictionaryCommand extends Command {
   }
 
   run(message) {
-    console.log(`${new Date().toLocaleString()} - ${message.author.username} - invite`);
+    console.log(`${message.author.username} - invite`);
 
     return message.channel
     .send(`Use <https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot&permissions=60480> to invite me to your server.`);

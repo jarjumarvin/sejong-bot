@@ -8,13 +8,14 @@ module.exports = class OwnerCommand extends Command {
       name: 'stats',
       cooldown: 3,
       group: 'owner',
+      ownerOnly: true,
       memberName: 'stats',
       description: 'Display some stats.',
     })
   }
 
   run(message) {
-    console.log(`${new Date().toLocaleString()} - ${message.author.username} - stats`);
+    console.log(`${message.author.username} - stats`);
 
     const embed = DiscordUtil.createBasicEmbed().setDescription(`Currently active on ${this.client.guilds.cache.size} servers.`)
     return message.channel.send(embed);
