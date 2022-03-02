@@ -8,12 +8,12 @@ const {
 	prefix, status
   } = require('./config.json');
 
-const { discord_token, owner_id } = require('./apiconfig.json');
+const { discord_token, owner_id, support_discord } = require('./apiconfig.json');
 
 const client = new CommandoClient({
 	commandPrefix: prefix,
   owner: owner_id,
-  invite: 'https://discord.gg/EhGjg2drSQ',
+  invite: support_discord,
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
   intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGES']
 });

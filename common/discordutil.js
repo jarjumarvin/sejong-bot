@@ -174,22 +174,30 @@ module.exports = {
     return embed;
   },
 
-  createHelpEmbed(commands) {
-    const embed = this.createBasicEmbed('Sejong (made by @Marvin#1997)').setDescription(`Use **${prefix}help <command>** to see information about a specific command.`);
-    commands.forEach((c) => {
-      if (c.name === 'help') return;
-      if (c.devOnly) return;
-      const {
-        name,
-        aliases,
-        description,
-        examples,
-      } = c;
-
-      const descriptionAndExamples = description + (examples ? `\r\n __(Ex. ${examples})__` : '');
-      const title = `${prefix}${name} ${aliases ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
-      embed.addField(title, descriptionAndExamples);
+  createHelpEmbed(commands, order) {
+    const embed = this.createBasicEmbed('Sejong')
+      .setDescription(`Use **${prefix}help <command>** to see information about a specific command.`)
+    
+    order.forEach((o) => {
+      const c = commands.get(o);
+      if (c != null) {
+        if (c.name === 'help') return;
+        if (c.devOnly) return;
+        const {
+          name,
+          aliases,
+          description,
+          examples,
+        } = c;
+  
+        const descriptionAndExamples = description + (examples ? `\r\n __(Ex. ${examples})__` : '');
+        const title = `${prefix}${name} ${aliases.length > 0 ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
+        embed.addField(title, descriptionAndExamples);
+      }
     });
+
+    embed.addField("\u200B", `[Made by @Marvin#1997, consider buying him a coffee ❤️](https://www.buymeacoffee.com/jarjumarvin)`)
+
     return embed;
   },
 
