@@ -8,7 +8,6 @@ module.exports = class DictionaryCommand extends Command {
       name: 'invite',
       cooldown: 3,
       group: 'dictionary',
-      aliases: ['inv', 'i'],
       memberName: 'invite',
       description: 'Get an invite link for the bot',
     })
