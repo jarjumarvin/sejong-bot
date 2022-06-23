@@ -34,7 +34,7 @@
     "roman-numeral": "^0.2.6",
     "sequelize": "^5.21.6",
     "sqlite3": "^4.2.0",
-    "got": "^11.8.2"
+    "got": "^11.8.5"
   },
   "devDependencies": {
     "eslint": "^8.9.0",
