@@ -177,7 +177,7 @@ module.exports = {
   createHelpEmbed(commands, order) {
     const embed = this.createBasicEmbed('Sejong')
       .setDescription(`Use **${prefix}help <command>** to see information about a specific command.`)
-    
+
     order.forEach((o) => {
       const c = commands.get(o);
       if (c != null) {
@@ -189,7 +189,7 @@ module.exports = {
           description,
           examples,
         } = c;
-  
+
         const descriptionAndExamples = description + (examples ? `\r\n __(Ex. ${examples})__` : '');
         const title = `${prefix}${name} ${aliases.length > 0 ? `(short: ${aliases.map(e => prefix + e).join(', ')})` : ''}`;
         embed.addField(title, descriptionAndExamples);

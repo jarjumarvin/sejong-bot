@@ -16,9 +16,9 @@ module.exports = class DictionaryCommand extends Command {
 
   run(message, args) {
     const commands = message.client.registry.groups.get('dictionary').commands;
-    
+
     const order = ['word', 'examples', 'hanja', 'invite', 'support']
-  
+
     console.log(`${message.author.username} - help`);
 
     if (!args) {
@@ -30,7 +30,7 @@ module.exports = class DictionaryCommand extends Command {
       if (args.length != 1) {
         message.reply(`Please only supply a single command!`);
         return;
-      } 
+      }
     }
 
     const name = args[0].toLowerCase();

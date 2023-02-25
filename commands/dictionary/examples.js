@@ -36,8 +36,7 @@ module.exports = class DictionaryCommand extends Command {
 
     function send(dicEntries, answerMessage) {
       const exEmbed = DiscordUtil.createExampleResultEmbed('en', q, message.author.username, isDM, dicEntries);
-      
-      
+
       if (dicEntries.length === 0) {
         answerMessage.edit(exEmbed);
         return;
@@ -47,7 +46,7 @@ module.exports = class DictionaryCommand extends Command {
         if (!isDM) msg.react('🔖');
       });
     }
-    
+
     const pendingEmbed = DiscordUtil.createPendingEmbed(message.author.username);
     message.channel.send(pendingEmbed).then((answerMessage) => {
       promise.then((result) => {

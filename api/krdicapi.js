@@ -21,7 +21,7 @@ module.exports = class KrDicApi {
       const h = title.text().match(/\(.*\)/);
       const p = title.text().match(/\[(.*?)\]/);
 
-      let s = $(dicEntry).find('.star').children().length; 
+      let s = $(dicEntry).find('.star').children().length;
 
       dicEntry.stars = s;
 
@@ -55,7 +55,7 @@ module.exports = class KrDicApi {
         const sense = {};
         sense.meaning = senses.eq(j).text().trim().replace(/\d+/g, '').replace(/\s+/g, ' ').replace('. ', '').trim();
         sense.definition = senses.eq(j + 1).text().replace(/\s+/g, ' ').trim();
-        sense.translation = senses.eq(j + 2).text().replace(/\s+/g, ' ').trim();  
+        sense.translation = senses.eq(j + 2).text().replace(/\s+/g, ' ').trim();
         entrySenses.push(sense);
       }
       dicEntry.senses = entrySenses;
@@ -76,7 +76,7 @@ module.exports = class KrDicApi {
             rejectUnauthorized: false
           }
         };
-        
+
         const response = await got(this.url, options);
         resolve(this.parseResult(response.body));
         //=> '<!doctype html> ...'
