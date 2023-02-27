@@ -1,0 +1,10 @@
+accent: 0xC27C0E # Colour
+command_prefix: "~" # Somewhat useless now
+support_discord: https://discord.com/invite/EhGjg2drSQ
+sql_file: ./cogs/hanja/hanjadic.sqlite
+avatar: https://i.imgur.com/v95B0db.jpg󠁿
+coffeelink: https://buymeacoffee.com/jarjumarvin
+owner_id: 104905437614223360
+invite_link: https://discord.com/api/oauth2/authorize?client_id=529231054909865985&permissions=3136&scope=bot
+log_dir: /var/log/sejong.log
+activity: IM BACK; /help

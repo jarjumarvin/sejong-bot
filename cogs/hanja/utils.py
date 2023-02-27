@@ -6,8 +6,6 @@ import pydantic
 
 from config import settings
 
-
-
 class HanjaWord(pydantic.BaseModel):
     hanja: str
     hangul: str
@@ -49,6 +47,15 @@ def get_hanja_embeds(result: HanjaResult):
     l = result.similar_words + result.hanjas
 
     embeds = []
+
+    if len(l) == 0:
+        embed = discord.Embed(
+            type="rich",
+            title=f"Hanja Results for **{result.query}**",
+            color=settings["accent"],
+        )
+
+        return embed
 
     for i in range(0, len(l), 10):
         sub = l[i:i+10]

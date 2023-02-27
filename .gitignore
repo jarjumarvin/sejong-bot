@@ -11,3 +11,6 @@ pids
 .secrets.*
 
 .DS_STORE
+
+**/__pycache__
+

@@ -7,12 +7,11 @@ import pydantic
 import requests
 import urllib3
 from urllib3.connectionpool import InsecureRequestWarning
-
+import xmltodict
+from devtools import debug
 from config import settings
+
 urllib3.disable_warnings(InsecureRequestWarning)
-
-
-
 
 BASE_URL = "https://krdict.korean.go.kr/eng/dicSearch/search?wordMatchFlag=N&mainSearchWord={word}&nation=eng&nationCode=6&blockCount={amount}"
 
@@ -31,6 +30,9 @@ class DictionaryEntry(pydantic.BaseModel):
 
 class SearchResult(pydantic.BaseModel):
     entries: List[DictionaryEntry] = []
+
+class ExamplesResult(pydantic.BaseModel):
+    entries: List[str] = []
 
 
 def query_dictionary(word: str) -> str:
@@ -66,20 +68,24 @@ def parse_response(html: str):
             pronunciation = pronunciation.group(0)[1:-1].replace("듣기", "")
 
         # Extract Word Type
-        word_types = [
-                        t.strip()
-                        for t in
-                        re.sub(
-                            r"\s+/g",
-                            "",
-                            title.find("span", class_="word_att_type1").text \
-                            .replace("「", "") \
-                            .replace("」", "") \
-                        ).split()
-                    ]
+        word_type_kr = None
+        word_type_en = None
 
-        word_type_kr = word_types[0]
-        word_type_en = word_types[1]
+        if title.find("span", class_="word_att_type1"):
+            word_types = [
+                            t.strip()
+                            for t in
+                            re.sub(
+                                r"\s+/g",
+                                "",
+                                title.find("span", class_="word_att_type1").text \
+                                .replace("「", "") \
+                                .replace("」", "") \
+                            ).split()
+                        ]
+
+            word_type_kr = word_types[0]
+            word_type_en = word_types[1]
 
         # Extract Senses
         senses: List[DictionarySense] = []
@@ -114,7 +120,7 @@ def parse_response(html: str):
 
     return result
 
-def get_dictionary_embed(word: str, result: SearchResult, language: Literal["en", "kr"]):
+def get_dictionary_embed(word: str, result: SearchResult, language: Literal["en", "kr"] = "en"):
     embed = discord.Embed(
             type="rich",
             title=f"Search Results for {word}",
@@ -138,3 +144,33 @@ def get_dictionary_embed(word: str, result: SearchResult, language: Literal["en"
         embed.add_field(name=title, value="\n".join(defs), inline=False)
 
     return embed
+
+def get_examples(word: str):
+    result = ExamplesResult()
+
+    r = requests.post(f"https://krdict.korean.go.kr/api/search?key={settings['krdic_token']}&part=exam&method=exact&q={word}", verify=False)
+
+    xml = xmltodict.parse(r.text)["channel"]
+
+    if "item" in xml:
+        result.entries = [item["example"].replace(word, f"**__{word}__**") for item in xml["item"]]
+
+    return result
+
+def get_examples_embed(word: str, result: ExamplesResult):
+    embed = discord.Embed(
+        type="rich",
+        title=f"Sentences containing: {word}",
+        color=settings["accent"],
+    )
+
+    if len(result.entries) > 0:
+        rows = []
+        for i, example in enumerate(result.entries):
+            rows.append(f"**{i+1}.** " + example)
+
+        embed.description = "\n\n".join(rows)
+
+    return embed
+
+
