@@ -1,3 +1,9 @@
+# DISCLAIMER
+
+THIS README IS HEAVILY OUTDATED
+
+Currently running version is on the python branch.
+
 # Who is Sejong-bot?
 Sejong-bot is a Korean language bot targeted towards Korean learners and enthusiats. It supports features such as word definitions in Korean and English, example sentences and neural machine translation. Users can also bookmark past searches to their DM's.
 
