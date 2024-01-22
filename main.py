@@ -9,11 +9,8 @@ from config import settings
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-<<<<<<< HEAD
 
 # create logging file
-=======
->>>>>>> 8882c3abfe433d8d469bee2f5944ce921694046b
 handler = logging.FileHandler(filename=settings["log_dir"], encoding='utf-8', mode='a')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
