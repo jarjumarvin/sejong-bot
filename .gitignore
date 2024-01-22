@@ -14,5 +14,6 @@ pids
 
 **/__pycache__
 
-.venv
+.venv/
+venv/
 sejong.log*
