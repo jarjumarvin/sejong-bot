@@ -9,11 +9,13 @@ from discord.ext.commands.errors import CommandNotFound, CommandOnCooldown
 
 from config import settings
 
+
 logger = logging.getLogger("discord")
 logger.setLevel(logging.INFO)
 
-# create logging file
-handler = RotatingFileHandler(
+formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+
+fileHandler = RotatingFileHandler(
     settings["log_dir"],
     mode="a",
     maxBytes=100 * 1024 * 1024,
@@ -21,10 +23,13 @@ handler = RotatingFileHandler(
     encoding=None,
     delay=False,
 )
-handler.setFormatter(
-    logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
-)
-logger.addHandler(handler)
+fileHandler.setFormatter(formatter)
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(formatter)
+
+logger.addHandler(fileHandler)
+logger.addHandler(consoleHandler)
 
 
 class Sejong(bridge.AutoShardedBot):
