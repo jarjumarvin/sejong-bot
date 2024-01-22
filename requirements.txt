@@ -15,7 +15,6 @@ Cython==3.0.8
 dynaconf==3.2.4
 frozenlist==1.4.1
 idna==3.6
-logging==0.4.9.6
 lxml==5.1.0
 multidict==6.0.4
 orjson==3.9.12
