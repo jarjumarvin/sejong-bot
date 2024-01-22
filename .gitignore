@@ -1,3 +1,5 @@
+.venv/
+venv/
 # Logs
 logs
 
@@ -14,6 +16,4 @@ pids
 
 **/__pycache__
 
-.venv/
-venv/
 sejong.log*
