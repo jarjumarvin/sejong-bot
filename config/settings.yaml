@@ -6,5 +6,5 @@ avatar: https://i.imgur.com/v95B0db.jpg󠁿
 coffeelink: https://buymeacoffee.com/jarjumarvin
 owner_id: 104905437614223360
 invite_link: https://discord.com/api/oauth2/authorize?client_id=529231054909865985&permissions=3136&scope=bot
-log_dir: /var/log/sejong.log
+log_dir: ./sejong.log
 activity: IM BACK; /help

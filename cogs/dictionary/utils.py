@@ -8,7 +8,6 @@ import requests
 import urllib3
 from urllib3.connectionpool import InsecureRequestWarning
 import xmltodict
-from devtools import debug
 from config import settings
 
 urllib3.disable_warnings(InsecureRequestWarning)

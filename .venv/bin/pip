@@ -1,4 +1,4 @@
-#!/Users/jarjumarvin/Documents/dev/sejong/venv/bin/python
+#!/Users/jarjumarvin/Documents/dev/sejong-bot/.venv/bin/python3.10
 # -*- coding: utf-8 -*-
 import re
 import sys

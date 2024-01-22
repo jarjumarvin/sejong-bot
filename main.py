@@ -9,6 +9,8 @@ from config import settings
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
+
+# create logging file
 handler = logging.FileHandler(filename=settings["log_dir"], encoding='utf-8', mode='a')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
@@ -37,6 +39,6 @@ activity = discord.Activity(name=settings["activity"], type=discord.ActivityType
 bot = Sejong(command_prefix=settings["command_prefix"], intents=intents, activity=activity)
 
 bot.remove_command("help")
-bot.load_extensions("cogs.dictionary.cog", "cogs.hanja.cog", "cogs.prometheus", "cogs.support")
+bot.load_extensions("cogs.dictionary.cog", "cogs.hanja.cog", "cogs.support") # "cogs.prometheus"
 
 bot.run(settings["token"])
