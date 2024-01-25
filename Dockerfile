@@ -1,7 +1,7 @@
 FROM python:3.10.13-alpine
 
-RUN apk update && apk add python3-dev gcc libc-dev libffi-dev
-# set workdir
+RUN apk update && apk add python3-dev gcc libc-dev libffi-dev libxslt-dev libxml2 rust cargo
+# set workdir 
 WORKDIR /app
 
 # copy requirements.txt

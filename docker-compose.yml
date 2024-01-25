@@ -1,8 +1,0 @@
-version: "3.8"
-services:
-  main:
-    build: .
-    container_name: sejong
-    environment:
-      - DYNACONF_TOKEN=${DISCORD_TOKEN}
-      - DYNACONF_KRDIC_TOKEN=${KRDIC_TOKEN}
