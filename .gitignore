@@ -19,6 +19,6 @@ pids
 sejong.log*
 .env
 
-.vscode
+.vscode/
 prometheus.yml
 pyrightconfig.json
