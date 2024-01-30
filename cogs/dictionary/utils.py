@@ -6,7 +6,7 @@ import discord
 import pydantic
 import requests
 import urllib3
-from urllib3.connectionpool import InsecureRequestWarning
+from urllib3.exceptions import InsecureRequestWarning
 import xmltodict
 from config import settings
 

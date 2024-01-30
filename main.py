@@ -9,7 +9,7 @@ from discord.ext.commands.errors import CommandNotFound, CommandOnCooldown
 
 from config import settings
 
-
+# set up logging
 logger = logging.getLogger("discord")
 logger.setLevel(logging.INFO)
 
@@ -46,25 +46,32 @@ class Sejong(bridge.AutoShardedBot):
                 f"This command is currently on cooldown! Try again in {int(error.retry_after)}s."
             )
         elif isinstance(error, CommandNotFound):
-            await ctx.respond(f"The command you've entered is not a valid command.")
+            await ctx.respond("The command you've entered is not a valid command.")
         else:
+            # general error, log it and raise forwards
             full_error = traceback.format_exception(error)
             logger.error("".join(full_error))
-            raise error  # Here we raise other errors to ensure they aren't ignored
+            raise error
 
 
 intents = discord.Intents.default()
 activity = discord.Activity(
-    name=settings["activity"], type=discord.ActivityType.playing
+    name=settings["activity"],
+    type=discord.ActivityType.playing,
 )
 
 bot = Sejong(
-    command_prefix=settings["command_prefix"], intents=intents, activity=activity
+    command_prefix=settings["command_prefix"],
+    intents=intents,
+    activity=activity,
 )
 
 bot.remove_command("help")
 bot.load_extensions(
-    "cogs.dictionary.cog", "cogs.hanja.cog", "cogs.support"
-)  # "cogs.prometheus"
+    "cogs.dictionary.cog",
+    "cogs.hanja.cog",
+    "cogs.support",
+    # "cogs.prometheus",
+)
 
-bot.run(settings["token"])
+bot.run(settings["bot_token"])
