@@ -31,17 +31,15 @@ Searches the hanja database for meanings of hanjas and related words that occur 
 
 Returns a list of Korean example sentences including a word given. Users can bookmark the result.
 
-## Installation
+## Development:
 
-Requirements are given in ``requirements.txt``. I developed on Python 3.10.13, which is also the base-image of the Dockerfile if applicable to you.
+Requirements are given in ``requirements.txt``. Install using ``venv`` or however you prefer. I developed on Python 3.10.13, which is also the base-image of the Dockerfile if applicable to you.
 
-### Running:
 - Generate a [Discord Bot Token](https://discordapp.com/developers/applications/), a [한국어기초사전 OPEN API Token](https://krdict.korean.go.kr/openApi/openApiInfo).
 - Either use the env variables ``SEJONG_BOT_TOKEN`` and ``SEJONG_KRDIC_TOKEN``, or create a ``.env`` file in the project root of the following form:
-```yaml
-BOT_TOKEN=<<DISCORD_TOKEN>>
-KRDIC_TOKEN=<<KRDIC_TOKEN>>
-```
-
+    ```yaml
+    BOT_TOKEN=<<DISCORD_TOKEN>>
+    KRDIC_TOKEN=<<KRDIC_TOKEN>>
+    ```
 - Modify ``config/emojis.yaml`` and ``config/settings.yaml`` as required.
 - Run using ``python main.py``
